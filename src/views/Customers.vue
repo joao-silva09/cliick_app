@@ -5,6 +5,9 @@
   </template>
   
   <script>
+
+  import { useCustomerStore } from '../stores/CustomerStore';
+  const store = useCustomerStore();
   
   export default {
     name: "Customers",
