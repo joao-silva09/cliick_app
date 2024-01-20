@@ -8,20 +8,27 @@
       </li>
     </ul>
 
-    <div class="relative"></div>
+    <button
+      @click="openModal()"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md"
+    >Adicionar cliente</button>
+
+    <Modal ref="modal" />
   </div>
 </template>
 
 <script>
 import api from "../services/api";
-
 import { useCustomerStore } from "../stores/CustomerStore";
+import Modal from '../components/Modal.vue';
 const store = useCustomerStore();
 
 export default {
   name: "Customers",
 
-  components: {},
+  components: {
+    Modal
+  },
 
   data() {
     return {
@@ -39,6 +46,10 @@ export default {
         this.customers = response.data.data;
         store.storeCustomers(response.data.data);
       });
+    },
+
+    openModal() {
+      this.$refs.modal.openModal();
     },
   },
 };
