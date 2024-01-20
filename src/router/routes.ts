@@ -35,9 +35,9 @@ export const routes = [
       },
     ],
   },
-  // {
-  //   path: "/:pathMatch(.*)",
-  //   component: () =>
-  //     import(/* webpackChunkName: "error" */ "../views/Error404.vue"),
-  // },
+  {
+    path: "/:pathMatch(.*)",
+    component: () =>
+      import(/* webpackChunkName: "error" */ "../views/Error404.vue"),
+  },
 ];
