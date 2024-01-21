@@ -3,8 +3,8 @@
     <h1 class="text-center mt-5">Clientes</h1>
 
     <ul>
-      <li v-for="customer in customers" :key="customer.id">
-        {{ customer.name }}
+      <li v-for="customer in customers" :key="customer.id" class="bg-gray-100 my-2">
+        {{ customer.name }} - {{ customer.email }} - {{ customer.entry_date }}
       </li>
     </ul>
 
