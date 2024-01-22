@@ -18,28 +18,20 @@
       >
         <!-- Conteúdo interno da modal -->
         <div class="bg-white p-4">
-          <h2 class="text-2xl font-semibold mb-4">Adicionar novo cliente</h2>
-          <label for="name">Nome</label>
+          <h2 class="text-2xl font-semibold mb-4">Adicionar novo time</h2>
+          <label for="name">Name</label>
           <input
-            v-model="customer.name"
+            v-model="team.name"
             type="text"
             id="name"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
 
-          <label for="email">Email</label>
+          <label for="description">Descrição</label>
           <input
-            v-model="customer.email"
-            type="email"
-            id="email"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
-          />
-
-          <label for="entry_date">Data de Entrada</label>
-          <input
-            v-model="customer.entryDate"
-            type="date"
-            id="entry_date"
+            v-model="team.description"
+            type="text"
+            id="description"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
         </div>
@@ -53,7 +45,7 @@
             Fechar
           </button>
           <button
-            @click="createCustomer"
+            @click="createTeam"
             class="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Salvar
@@ -70,10 +62,10 @@ export default {
   data() {
     return {
       isOpen: false,
-      customer: {
+      team: {
         name: "",
-        email: "",
-        entryDate: "",
+        description: "",
+        company_id: 1,
       },
     };
   },
@@ -82,19 +74,18 @@ export default {
       this.isOpen = true;
     },
 
-    closeModal() {
+    closeModal() { 
       this.isOpen = false;
     },
 
-    createCustomer() {
+    createTeam() {
       const payload = {
-        name: this.customer.name,
-        email: this.customer.email,
-        entry_date: this.customer.entryDate,
+        name: this.team.name,
+        description: this.team.description,
         company_id: 1,
       };
 
-      api.post("customers", payload).then((response) => {
+      api.post("teams", payload).then((response) => {
         console.log(response);
       });
 

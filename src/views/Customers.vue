@@ -3,7 +3,11 @@
     <h1 class="text-center mt-5">Clientes</h1>
 
     <ul>
-      <li v-for="customer in customers" :key="customer.id" class="bg-gray-100 my-2">
+      <li
+        v-for="customer in customers"
+        :key="customer.id"
+        class="bg-gray-100 my-2"
+      >
         {{ customer.name }} - {{ customer.email }} - {{ customer.entry_date }}
       </li>
     </ul>
@@ -11,7 +15,9 @@
     <button
       @click="openModal()"
       class="px-4 py-2 bg-blue-500 text-white rounded-md"
-    >Adicionar cliente</button>
+    >
+      Adicionar cliente
+    </button>
 
     <Modal ref="modal" />
   </div>
@@ -20,14 +26,14 @@
 <script>
 import api from "../services/api";
 import { useCustomerStore } from "../stores/CustomerStore";
-import Modal from '../components/Customers/AddCustomerModal.vue';
+import Modal from "../components/Customers/AddCustomerModal.vue";
 const store = useCustomerStore();
 
 export default {
   name: "Customers",
 
   components: {
-    Modal
+    Modal,
   },
 
   data() {

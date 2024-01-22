@@ -34,6 +34,12 @@ export const routes = [
           import(/* webpackChunkName: "customers" */ "../views/Customers.vue"),
       },
       {
+        path: "teams",
+        name: "teams",
+        component: () =>
+          import(/* webpackChunkName: "teams" */ "../views/Teams.vue"),
+      },
+      {
         path: "demands",
         name: "demands",
         component: () =>
