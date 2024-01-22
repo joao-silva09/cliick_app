@@ -18,28 +18,36 @@
       >
         <!-- Conteúdo interno da modal -->
         <div class="bg-white p-4">
-          <h2 class="text-2xl font-semibold mb-4">Adicionar novo cliente</h2>
-          <label for="name">Nome</label>
+          <h2 class="text-2xl font-semibold mb-4">Adicionar nova demanda</h2>
+          <label for="title">Título</label>
           <input
-            v-model="customer.name"
+            v-model="demand.title"
             type="text"
-            id="name"
+            id="title"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
 
-          <label for="email">Email</label>
+          <label for="description">Descrição</label>
           <input
-            v-model="customer.email"
-            type="email"
-            id="email"
+            v-model="demand.description"
+            type="text"
+            id="description"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
 
-          <label for="entry_date">Data de Entrada</label>
+          <label for="status">Status</label>
           <input
-            v-model="customer.entryDate"
+            v-model="demand.status"
+            type="text"
+            id="status"
+            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+          />
+
+          <label for="deadline">Prazo</label>
+          <input
+            v-model="demand.deadline"
             type="date"
-            id="entry_date"
+            id="deadline"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
         </div>
@@ -53,7 +61,7 @@
             Fechar
           </button>
           <button
-            @click="createCustomer"
+            @click="createDemand"
             class="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Salvar
@@ -70,10 +78,11 @@ export default {
   data() {
     return {
       isOpen: false,
-      customer: {
-        name: "",
-        email: "",
-        entryDate: "",
+      demand: {
+        title: "",
+        description: "",
+        status: "",
+        deadline: null,
       },
     };
   },
@@ -86,15 +95,17 @@ export default {
       this.isOpen = false;
     },
 
-    createCustomer() {
+    createDemand() {
       const payload = {
-        name: this.customer.name,
-        email: this.customer.email,
-        entry_date: this.customer.entryDate,
-        company_id: 1,
+        title: this.demand.title,
+        description: this.demand.description,
+        status: this.demand.status,
+        deadline: this.demand.deadline,
+        customer_id: 1,
+        teams_ids: [1],
       };
 
-      api.post("customers", payload).then((response) => {
+      api.post("demands", payload).then((response) => {
         console.log(response);
       });
 
