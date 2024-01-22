@@ -24,23 +24,23 @@
             v-model="customer.name"
             type="text"
             id="name"
-            class="bg-gray-300 placeholder-gray-500 text-gray-700 font-light focus:outline-none block w-full"
-            />
-            
-            <label for="email">Email</label>
-            <input
+            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+          />
+
+          <label for="email">Email</label>
+          <input
             v-model="customer.email"
             type="email"
             id="email"
-            class="bg-gray-300 placeholder-gray-500 text-gray-700 font-light focus:outline-none block w-full"
-            />
-            
-            <label for="entry_date">Data de Entrada</label>
-            <input
+            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+          />
+
+          <label for="entry_date">Data de Entrada</label>
+          <input
             v-model="customer.entryDate"
             type="date"
             id="entry_date"
-            class="bg-gray-300 placeholder-gray-500 text-gray-700 font-light focus:outline-none block w-full"
+            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
         </div>
 
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import api from "../services/api";
+import api from "../../services/api";
 export default {
   data() {
     return {

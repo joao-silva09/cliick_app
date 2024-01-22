@@ -20,7 +20,7 @@
 <script>
 import api from "../services/api";
 import { useCustomerStore } from "../stores/CustomerStore";
-import Modal from '../components/Modal.vue';
+import Modal from '../components/Customers/AddCustomerModal.vue';
 const store = useCustomerStore();
 
 export default {
