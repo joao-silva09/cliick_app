@@ -7,7 +7,7 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import cookie from "../services/cookie";
 export default {
   name: "Header",

@@ -1,6 +1,6 @@
 <template>
   <div style="height: 300px">
-    <h1 class="text-center mt-5">Teams</h1>
+    <h1 class="text-center mt-5">Financeiro</h1>
 
     <ul>
       <li v-for="team in teams" :key="team.id" class="bg-gray-100 my-2">
@@ -26,7 +26,7 @@ import Modal from "../components/Teams/AddTeamModal.vue";
 
 const teamStore = useTeamStore();
 export default {
-  name: "Teams",
+  name: "Financial",
 
   components: {
     Modal,

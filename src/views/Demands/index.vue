@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import api from "../../services/api";
 import { useDemandStore } from "../../stores/DemandStore";
 import Modal from "../../components/Demands/AddDemandModal.vue";

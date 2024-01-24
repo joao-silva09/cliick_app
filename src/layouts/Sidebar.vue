@@ -15,7 +15,7 @@
   </aside>
 </template>
 
-<script>
+<script lang="ts">
 import { useUserStore } from "../stores/UserStore";
 
 const userStore = useUserStore();

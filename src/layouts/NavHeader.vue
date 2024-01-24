@@ -16,7 +16,7 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import HeaderLinks from "../components/Layout/HeaderLinks.vue";
 export default {
   name: "NavHeader",

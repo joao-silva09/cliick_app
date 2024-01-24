@@ -64,7 +64,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import api from "../../services/api";
 export default {
   data() {
