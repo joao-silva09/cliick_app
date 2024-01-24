@@ -7,14 +7,16 @@ export const useUserStore = defineStore("user", {
       firstName: string;
       lastName: string;
       email: string;
-    }
+    },
+    currentRouteName: "",
   }),
   actions: {
-    storeUser(user){
-        this.user = user;
-    }
+    storeUser(user) {
+      this.user = user;
+    },
+    storeCurrentRouteName(routeName) {
+      this.currentRouteName = routeName;
+    },
   },
-  getters: {
-    
-  }
+  getters: {},
 });
