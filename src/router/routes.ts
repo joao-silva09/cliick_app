@@ -70,7 +70,7 @@ export const routes = [
             name: "demandsForCustomer",
             component: () =>
               import(
-                /* webpackChunkName: "forTeam" */ "../views/Demands/ForTeam.vue"
+                /* webpackChunkName: "forTeam" */ "../views/Demands/ForCustomer.vue"
               ),
           },
         ],
