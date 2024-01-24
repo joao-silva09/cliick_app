@@ -6,7 +6,7 @@
     <ul v-if="$route.matched[1].path === '/demands'" class="flex gap-2">
       <HeaderLinks :routeName="'demandsGeral'" routeLabel="Geral" />
       <HeaderLinks :routeName="'demandsForTeam'" routeLabel="Por Time" />
-      <HeaderLinks :routeName="'demandsForTeam'" routeLabel="Por Cliente" />
+      <HeaderLinks :routeName="'demandsForCustomer'" routeLabel="Por Cliente" />
     </ul>
     <ul v-if="$route.matched[1].path === '/financial'" class="flex gap-2">
       <HeaderLinks :routeName="'demandsForTeam'" routeLabel="Geral" />

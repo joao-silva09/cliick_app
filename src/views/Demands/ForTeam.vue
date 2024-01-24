@@ -1,5 +1,6 @@
 <template>
   <div>
+    Por time
     <ul v-for="team in $pinia.state.value.team.teams">
       <router-link :to="team.name">
         {{ team.name }}

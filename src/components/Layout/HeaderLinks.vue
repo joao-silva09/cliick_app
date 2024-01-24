@@ -1,7 +1,9 @@
 <template>
-  <li class="p-2 bg-blue-200">
-    <router-link :to="{ name: routeName }">{{ routeLabel }}</router-link>
-  </li>
+  <router-link :to="{ name: routeName }">
+    <li class="p-2 bg-blue-200">
+      {{ routeLabel }}
+    </li>
+  </router-link>
 </template>
 
 <script>
