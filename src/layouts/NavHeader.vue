@@ -13,12 +13,17 @@
       <HeaderLinks :routeName="'demandsForTeam'" routeLabel="Despesas" />
       <HeaderLinks :routeName="'demandsForTeam'" routeLabel="Dívidas" />
     </ul>
+    <!-- <div v-else @click.stop.prevent="back()">  
+<router-link :to="this.$router.back()">Voltar</router-link> 
+      Voltar
+    </div> -->
   </nav>
 </template>
 
 <script lang="ts">
 import HeaderLinks from "../components/Layout/HeaderLinks.vue";
 import { useUserStore } from "../stores/UserStore";
+
 export default {
   name: "NavHeader",
   components: {
