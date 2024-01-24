@@ -1,8 +1,8 @@
 <!-- Header.vue -->
 <template>
-  <header class="primary-color p-4 flex justify-between items-center">
+  <header class="bg-blue-50 p-4 flex justify-between items-center">
     <!-- Conteúdo do cabeçalho vai aqui -->
-    <h1 class="text-white text-2xl font-semibold">Seu Dashboard</h1>
+    <img src="../assets/img/logo.png" class="w-16"/>
     <button class="bg-blue-400" @click.stop.prevent="logout()">Sair</button>
   </header>
 </template>
