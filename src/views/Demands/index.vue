@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import api from "../services/api";
-import { useDemandStore } from "../stores/DemandStore";
-import Modal from "../components/Demands/AddDemandModal.vue";
+import api from "../../services/api";
+import { useDemandStore } from "../../stores/DemandStore";
+import Modal from "../../components/Demands/AddDemandModal.vue";
 const store = useDemandStore();
 
 export default {

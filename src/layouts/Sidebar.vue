@@ -8,7 +8,8 @@
       <li><router-link :to="{ name: 'home' }">Página Inicial</router-link></li>
       <li><router-link :to="{ name: 'customers' }">Clientes</router-link></li>
       <li><router-link :to="{ name: 'teams' }">Times</router-link></li>
-      <li><router-link :to="{ name: 'demands' }">Demandas</router-link></li>
+      <li><router-link :to="{ name: 'demandsGeral' }">Demandas</router-link></li>
+      <li><router-link :to="{ name: 'financial' }">Financeiro</router-link></li>
       <!-- Adicione mais itens de menu conforme necessário -->
     </ul>
   </aside>
