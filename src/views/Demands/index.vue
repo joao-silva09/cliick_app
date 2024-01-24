@@ -3,7 +3,11 @@
     <h1 class="text-center mt-5">Demandas</h1>
 
     <ul>
-      <li v-for="demand in demands" :key="demand.id" class="bg-gray-100 my-2">
+      <li
+        v-for="demand in $pinia.state.value.demand.demands"
+        :key="demand.id"
+        class="bg-gray-100 my-2"
+      >
         {{ demand.title }} - {{ demand.customer.name }} -
         {{ demand.teams.map((team) => team.name) }}
       </li>
@@ -21,7 +25,6 @@
 </template>
 
 <script lang="ts">
-import api from "../../services/api";
 import { useDemandStore } from "../../stores/DemandStore";
 import Modal from "../../components/Demands/AddDemandModal.vue";
 const store = useDemandStore();
@@ -40,16 +43,16 @@ export default {
   },
 
   created() {
-    this.getDemands();
+    store.getDemands();
   },
 
   methods: {
-    getDemands() {
-      api.get("demands").then((response) => {
-        this.demands = response.data.data;
-        store.storeDemands(response.data.data);
-      });
-    },
+    // getDemands() {
+    //   api.get("demands").then((response) => {
+    //     this.demands = response.data.data;
+    //     store.storeDemands(response.data.data);
+    //   });
+    // },
 
     openModal() {
       this.$refs.modal.openModal();
