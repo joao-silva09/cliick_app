@@ -11,6 +11,7 @@ export const useDemandStore = defineStore("demand", {
       deadline: Date;
       customer: {};
       teams: [];
+      open: boolean;
     }[],
   }),
   actions: {

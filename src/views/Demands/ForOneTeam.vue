@@ -1,8 +1,13 @@
 <template>
-  <div class="flex gap-2">
-    {{ $route.params.team }}
-
-    <DemandAccordion />
+  <div class="">
+    <h1 class="text-center font-bold">Demandas</h1>
+    <img
+      v-if="spinner.load_demands"
+      src="../../assets/img/spinner.svg"
+      alt=""
+      class="w-5 h-5 mr-2"
+    />
+    <DemandAccordion v-else/>
   </div>
 </template>
 
@@ -21,7 +26,11 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      spinner: {
+        load_demands: false,
+      },
+    };
   },
   created() {
     this.getDemandsByTeam();
@@ -29,37 +38,26 @@ export default {
 
   methods: {
     getDemandsByTeam() {
-      api.get(`demands/team/${this.$route.params.team}`).then((response) => {
-        demandStore.storeDemands(
-          response.data.data.map((demand) => ({
-            ...demand,
-            open: false,
-          }))
-        );
-      });
+      api
+        .get(`demands/team/${this.$route.params.team}`)
+        .then((response) => {
+          this.spinner.load_demands = true;
+          demandStore.storeDemands(
+            response.data.data.map((demand) => ({
+              ...demand,
+              open: false,
+            }))
+          );
+        })
+        .catch(() => {
+          alert("Erro ao buscar as demandas do time");
+        })
+        .finally(() => (this.spinner.load_demands = false));
     },
   },
 };
 </script>
 
 <style>
-.accordion-item {
-  border: 1px solid #ccc;
-  margin-bottom: 1px;
-}
 
-.accordion-title {
-  padding: 10px;
-  background-color: #f0f0f0;
-}
-
-.accordion-content {
-  padding: 10px;
-  display: none;
-  background-color: #fff;
-}
-
-.accordion-content[style] {
-  display: block;
-}
 </style>

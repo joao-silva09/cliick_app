@@ -1,34 +1,26 @@
 <template>
-  <div>
-    Por time
+  <div class="flex gap-2">
     <ul v-for="team in $pinia.state.value.team.teams">
-      <router-link :to="team.name">
-        {{ team.name }}
-      </router-link>
-
+      <CardTeam :team="team" />
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { useTeamStore } from "../../stores/TeamStore";
+import CardTeam from "../../components/Demands/CardTeam.vue";
 
 const teamStore = useTeamStore();
 export default {
   name: "ForTeam",
-  setup() {
-    return {};
+  components: {
+    CardTeam
   },
 
   data() {
     return {
-      team: "afsdaf",
       teams: [],
     };
-  },
-  beforeCreate() {
-    teamStore.getTeams();
-    // teams = teamStore.getAllTeams()
   },
   mounted() {
     teamStore.getTeams();

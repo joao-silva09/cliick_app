@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{ name: $props.routeName }">
     <li
-      v-bind:class="routeName === currentRouteName ? 'border-blue-700' : ''"
+      :class="routeName === currentRouteName ? 'border-blue-700' : ''"
       class="py-0.5 px-2 border-2 border-gray-400 rounded hover:border-blue-600"
     >
       {{ routeLabel }}

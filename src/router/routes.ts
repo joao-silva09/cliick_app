@@ -66,6 +66,14 @@ export const routes = [
               ),
           },
           {
+            path: ":team",
+            name: "demandsForOneTeam",
+            component: () =>
+              import(
+                /* webpackChunkName: "forTeam" */ "../views/Demands/ForOneTeam.vue"
+              ),
+          },
+          {
             path: "for-customer",
             name: "demandsForCustomer",
             component: () =>
@@ -73,6 +81,14 @@ export const routes = [
                 /* webpackChunkName: "forTeam" */ "../views/Demands/ForCustomer.vue"
               ),
           },
+          // {
+          //   path: "for-customer/:customer",
+          //   name: "demandsForCustomer",
+          //   component: () =>
+          //     import(
+          //       /* webpackChunkName: "forTeam" */ "../views/Demands/ForCustomer.vue"
+          //     ),
+          // },
         ],
       },
     ],
