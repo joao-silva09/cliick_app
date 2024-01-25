@@ -4,19 +4,19 @@
     <!-- Conteúdo do menu lateral vai aqui -->
     Olá, {{ userName }} <br /><br />
     <ul>
-      <li class="hover:text-blue-700">
+      <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'home' }">Página Inicial</router-link>
       </li>
-      <li class="hover:text-blue-700">
+      <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'customers' }">Clientes</router-link>
       </li>
-      <li class="hover:text-blue-700">
+      <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'teams' }">Times</router-link>
       </li>
-      <li class="hover:text-blue-700">
+      <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'demandsGeral' }">Demandas</router-link>
       </li>
-      <li class="hover:text-blue-700">
+      <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'financial' }">Financeiro</router-link>
       </li>
       <!-- Adicione mais itens de menu conforme necessário -->

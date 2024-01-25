@@ -55,10 +55,20 @@
         <div
           class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
         >
-          {{ task.title }}
-          {{ task.description }}
-          {{ task.status }}
-          {{ task.deadline }}
+          <router-link
+            @click.stop.prevent="getTask(task.id)"
+            :to="{
+              name: 'task',
+              params: {
+                task: task.id,
+              },
+            }"
+          >
+            {{ task.title }}
+            {{ task.description }}
+            {{ task.status }}
+            {{ task.deadline }}
+          </router-link>
         </div>
       </div>
     </div>
@@ -67,8 +77,10 @@
 
 <script lang="ts">
 import { useDemandStore } from "../../stores/DemandStore";
+import { useTaskStore } from "../../stores/TaskStore";
 
 const demandStore = useDemandStore();
+const taskStore = useTaskStore();
 export default {
   name: "DemandAccordion",
   data() {
@@ -82,6 +94,10 @@ export default {
     toggleItem(index) {
       demandStore.$state.demands[index].open =
         !demandStore.$state.demands[index].open;
+    },
+
+    getTask(taskId) {
+      taskStore.getTask(taskId);
     },
   },
 };

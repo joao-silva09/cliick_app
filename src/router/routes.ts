@@ -91,6 +91,20 @@ export const routes = [
           // },
         ],
       },
+      {
+        path: "task",
+        name: "tasks",
+        children: [
+          {
+            path: ":task",
+            name: "task",
+            component: () =>
+              import(
+                /* webpackChunkName: "forTeam" */ "../views/Tasks/Task.vue"
+              ),
+          },
+        ],
+      },
     ],
   },
   {
