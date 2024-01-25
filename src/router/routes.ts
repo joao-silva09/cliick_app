@@ -66,11 +66,11 @@ export const routes = [
               ),
           },
           {
-            path: ":team",
-            name: "demandsForOneTeam",
+            path: ":id",
+            name: "demandsList",
             component: () =>
               import(
-                /* webpackChunkName: "forTeam" */ "../views/Demands/ForOneTeam.vue"
+                /* webpackChunkName: "forTeam" */ "../views/Demands/DemandsList.vue"
               ),
           },
           {

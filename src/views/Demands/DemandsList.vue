@@ -19,7 +19,7 @@ import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
 
 const demandStore = useDemandStore();
 export default {
-  name: "ForTeam",
+  name: "DemandsList",
   components: {
     CardTeam,
     DemandAccordion,
@@ -33,27 +33,11 @@ export default {
     };
   },
   created() {
-    this.getDemandsByTeam();
+    // this.getDemandsByTeam();
   },
 
   methods: {
-    getDemandsByTeam() {
-      api
-        .get(`demands/team/${this.$route.params.team}`)
-        .then((response) => {
-          this.spinner.load_demands = true;
-          demandStore.storeDemands(
-            response.data.data.map((demand) => ({
-              ...demand,
-              open: false,
-            }))
-          );
-        })
-        .catch(() => {
-          alert("Erro ao buscar as demandas do time");
-        })
-        .finally(() => (this.spinner.load_demands = false));
-    },
+   
   },
 };
 </script>

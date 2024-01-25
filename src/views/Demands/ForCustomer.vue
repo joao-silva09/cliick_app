@@ -1,37 +1,32 @@
 <template>
   <div>
     Por Cliente
-    <ul v-for="team in $pinia.state.value.team.teams">
-      <router-link :to="team.name">
-        {{ team.name }}
+    <ul v-for="customer in $pinia.state.value.customer.customers">
+      <router-link :to="customer.name">
+        {{ customer.name }}
       </router-link>
-
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { useTeamStore } from "../../stores/TeamStore";
+import { useCustomerStore } from "../../stores/CustomerStore";
 
-const teamStore = useTeamStore();
+const customerStore = useCustomerStore();
 export default {
-  name: "ForTeam",
+  name: "ForCustomer",
   setup() {
     return {};
   },
 
   data() {
     return {
-      team: "afsdaf",
-      teams: [],
+      customer: "afsdaf",
+      customers: [],
     };
   },
-  beforeCreate() {
-    teamStore.getTeams();
-    // teams = teamStore.getAllTeams()
-  },
   mounted() {
-    teamStore.getTeams();
+    customerStore.getCustomers();
     // teams = teamStore.getAllTeams()
   },
   methods: {},

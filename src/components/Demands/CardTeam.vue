@@ -1,9 +1,9 @@
 <template>
   <router-link
     :to="{
-      name: 'demandsForOneTeam',
+      name: 'demandsList',
       params: {
-        team: this.team.id,
+        id: this.team.id,
       },
     }"
   >
