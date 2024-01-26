@@ -11,7 +11,7 @@
           {{ task.title }}
         </div>
         <div>
-          {{ task.deadline }}
+          {{ new Date(task.deadline).toLocaleDateString() }}
         </div>
         <div>
           {{ task.demand.title }}
