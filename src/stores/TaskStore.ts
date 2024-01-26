@@ -5,28 +5,64 @@ export const useTaskStore = defineStore("task", {
   state: () => ({
     tasks: [] as {
       id: string;
-      name: string;
-      email: string;
-      entry_date: Date;
+      title: string;
+      description: string;
+      status: string;
+      deadline: Date;
+      users: [];
+      messages: [];
+      demand: {};
     }[],
     task: {} as {
       id: string;
-      name: string;
-      email: string;
-      entry_date: Date;
+      title: string;
+      description: string;
+      status: string;
+      deadline: Date;
+      users: [];
+      messages: Array<{
+        id: string;
+        message: string;
+        username: string;
+        created_at: Date;
+      }>;
+      demand: {};
     },
   }),
   actions: {
     storeTasks(tasks) {
-      this.tasks = tasks
+      this.tasks = tasks;
     },
+
     storeTask(task) {
-      this.task = task
+      this.task = task;
     },
-    getTask(taskId: Number) {
-      api.get(`tasks/${taskId}`).then((response) => {
-        this.storeTask(response.data.data);
-      })
-    }
+
+    storeMessage(messages) {
+      this.task.messages = messages;
+    },
+
+    getMyTasks() {
+      api.get(`tasks`).then((response) => {
+        this.storeTasks(response.data.data);
+      });
+    },
+
+    getTask(taskId: Number, router: any) {
+      api
+        .get(`tasks/${taskId}`)
+        .then((response) => {
+          this.storeTask(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() =>
+          router.push({
+            name: "task",
+            params: {
+              task: taskId,
+            },
+          })
+        );
+    },
   },
 });

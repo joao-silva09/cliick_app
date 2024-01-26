@@ -14,7 +14,7 @@
         <router-link :to="{ name: 'teams' }">Times</router-link>
       </li>
       <li class="hover:text-blue-700 cursor-pointer">
-        <router-link :to="{ name: 'demandsGeral' }">Demandas</router-link>
+        <router-link :to="{ name: 'myTasks' }">Demandas</router-link>
       </li>
       <li class="hover:text-blue-700 cursor-pointer">
         <router-link :to="{ name: 'financial' }">Financeiro</router-link>

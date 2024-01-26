@@ -4,8 +4,8 @@ export const useUserStore = defineStore("user", {
   state: () => ({
     user: {} as {
       id: string;
-      firstName: string;
-      lastName: string;
+      first_name: string;
+      last_name: string;
       email: string;
     },
     currentRouteName: "",

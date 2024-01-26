@@ -1,8 +1,8 @@
 <template>
   <div class="flex gap-2">
-    <ul v-for="team in $pinia.state.value.team.teams">
+    <div v-for="team in $pinia.state.value.team.teams">
       <CardTeam :team="team" @click.stop.prevent="getDemandsByTeam(team.id)" />
-    </ul>
+    </div>
   </div>
 </template>
 

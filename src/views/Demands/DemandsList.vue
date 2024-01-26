@@ -7,13 +7,12 @@
       alt=""
       class="w-5 h-5 mr-2"
     />
-    <DemandAccordion v-else/>
+    <DemandAccordion v-else />
   </div>
 </template>
 
 <script lang="ts">
 import CardTeam from "../../components/Demands/CardTeam.vue";
-import api from "../../services/api";
 import { useDemandStore } from "../../stores/DemandStore";
 import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
 
@@ -36,12 +35,8 @@ export default {
     // this.getDemandsByTeam();
   },
 
-  methods: {
-   
-  },
+  methods: {},
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
