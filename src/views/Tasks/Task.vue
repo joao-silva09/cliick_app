@@ -8,7 +8,7 @@
 
     <!-- h-screen rounded-sm p-4 flex flex-1 flex-col justify-end overflow-y-auto -->
     <div>
-      <div class="px-3 messages h-[76vh] overflow-y-auto" ref="messageContainer">
+      <div class="px-3 messages h-[75vh] overflow-y-auto" ref="messageContainer">
         <div
           v-for="message in $pinia.state.value.task.task.messages"
           :class="message.username === userName ? 'flex justify-end' : ''"
@@ -26,7 +26,7 @@
         v-model="contentMessage"
         type="text"
         placeholder="Digite sua mensagem..."
-        class="border mt-1 border-gray-200 shadow-xl w-full p-2 rounded focus:outline-none"
+        class="border mt-1 border-gray-400 shadow-xl w-full p-2 rounded focus:outline-none"
         @keyup.enter="addMessage()"
       />
     </div>

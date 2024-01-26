@@ -1,6 +1,6 @@
 <!-- Sidebar.vue -->
 <template>
-  <aside class="bg-gray-800 text-white p-4 h-screen">
+  <aside class="bg-gray-800 text-white p-4 h-[90vh]">
     <!-- Conteúdo do menu lateral vai aqui -->
     Olá, {{ userName }} <br /><br />
     <ul>
