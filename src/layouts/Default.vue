@@ -1,5 +1,6 @@
 <template>
   <div>
+    <LoadingOverlay  />
     <Header />
     <div class="flex">
       <Sidebar />
@@ -15,12 +16,14 @@
 </template>
 
 <script lang="ts">
+import LoadingOverlay from "../components/Layout/LoadingOverlay.vue";
 import Header from "./Header.vue";
 import Sidebar from "./Sidebar.vue";
 import NavHeader from "./NavHeader.vue";
 
 export default {
   components: {
+    LoadingOverlay,
     Header,
     Sidebar,
     NavHeader
