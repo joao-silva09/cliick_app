@@ -1,19 +1,10 @@
 <template>
-  <router-link
-    :to="{
-      name: 'demandsList',
-      params: {
-        id: this.team.id,
-      },
-    }"
+  <div
+    class="border border-slate-950 rounded-sm flex w-40 hover:bg-slate-600 hover:translate-y-1 hover:transition-all cursor-pointer"
   >
-    <div
-      class="border border-slate-950 rounded-sm flex w-40 hover:bg-slate-600 hover:translate-y-1 hover:transition-all"
-    >
-      <!-- {{ this.team }} -->
-      {{ this.team.name }}
-    </div>
-  </router-link>
+    <!-- {{ this.team }} -->
+    {{ this.team.name }}
+  </div>
 </template>
 
 <script lang="ts">

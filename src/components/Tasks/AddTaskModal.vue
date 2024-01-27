@@ -18,10 +18,10 @@
       >
         <!-- Conteúdo interno da modal -->
         <div class="bg-white p-4">
-          <h2 class="text-2xl font-semibold mb-4">Adicionar nova demanda</h2>
+          <h2 class="text-2xl font-semibold mb-4">Adicionar nova tarefa</h2>
           <label for="title">Título</label>
           <input
-            v-model="demand.title"
+            v-model="task.title"
             type="text"
             id="title"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
@@ -29,7 +29,7 @@
 
           <label for="description">Descrição</label>
           <input
-            v-model="demand.description"
+            v-model="task.description"
             type="text"
             id="description"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
@@ -37,7 +37,7 @@
 
           <label for="status">Status</label>
           <input
-            v-model="demand.status"
+            v-model="task.status"
             type="text"
             id="status"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
@@ -45,10 +45,19 @@
 
           <label for="deadline">Prazo</label>
           <input
-            v-model="demand.deadline"
+            v-model="task.deadline"
             type="date"
             id="deadline"
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+          />
+
+          <label for="usersIds">Usuários</label>
+          <v-select
+            v-model="task.users"
+            :options="$pinia.state.value.demand.usersToAdd"
+            label="name"
+            multiple
+            class="bg-gray-300"
           />
         </div>
 
@@ -61,7 +70,7 @@
             Fechar
           </button>
           <button
-            @click="createDemand"
+            @click="createTasks"
             class="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Salvar
@@ -74,19 +83,33 @@
 
 <script lang="ts">
 import api from "../../services/api";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+import { useUserStore } from "../../stores/UserStore";
 import { useDemandStore } from "../../stores/DemandStore";
+import { Task } from "../../types/Task";
+import { useApplicationStore } from "../../stores/ApplicationStore";
 
+const userStore = useUserStore();
 const demandStore = useDemandStore();
 export default {
-  name: "AddDemandModal",
+  name: "AddTaskModal",
+  components: {
+    vSelect,
+  },
+  props: {
+    demandId: Number,
+    demandIndex: Number,
+  },
   data() {
     return {
       isOpen: false,
-      demand: {
+      task: {
         title: "",
         description: "",
         status: "",
         deadline: null,
+        users: [],
       },
     };
   },
@@ -99,25 +122,35 @@ export default {
       this.isOpen = false;
     },
 
-    createDemand() {
+    createTasks() {
+      useApplicationStore().setIsLoading(true);
       const payload = {
-        title: this.demand.title,
-        description: this.demand.description,
-        status: this.demand.status,
-        deadline: this.demand.deadline,
-        customer_id: 1,
-        teams_ids: [1],
+        title: this.task.title,
+        description: this.task.description,
+        status: this.task.status,
+        deadline: this.task.deadline,
+        demand_id: this.$props.demandId,
+        users_ids: [
+          userStore.user.id,
+          ...this.task.users.map((user) => user.id),
+        ],
       };
 
+      console.log(demandStore.demandIndex);
+
       api
-        .post("demands", payload)
+        .post("tasks", payload)
         .then((response) => {
-          const currentDemands = demandStore.demands;
-          currentDemands.push(response.data.data)
-          demandStore.storeDemands(currentDemands);
+          const taskList: any[] =
+            demandStore.demands[Number(demandStore.demandIndex)].tasks ?? [];
+          taskList.push(response.data.data);
+          demandStore.storeTasks(taskList);
         })
-        .catch((e) => alert(e))
-        .finally(() => this.closeModal());
+        .catch((e) => console.log(e))
+        .finally(() => {
+          this.closeModal();
+          useApplicationStore().setIsLoading(false);
+        });
     },
   },
 };

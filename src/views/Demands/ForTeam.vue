@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-2">
-    <div v-for="team in $pinia.state.value.team.teams">
+    <div v-for="team in $pinia.state.value.team.teams" class="flex">
       <CardTeam :team="team" @click.stop.prevent="getDemandsByTeam(team.id)" />
     </div>
   </div>
@@ -11,6 +11,7 @@ import { useTeamStore } from "../../stores/TeamStore";
 import { useDemandStore } from "../../stores/DemandStore";
 import CardTeam from "../../components/Demands/CardTeam.vue";
 import api from "../../services/api";
+import { useApplicationStore } from "../../stores/ApplicationStore";
 
 const demandStore = useDemandStore();
 const teamStore = useTeamStore();
@@ -31,6 +32,7 @@ export default {
   },
   methods: {
     getDemandsByTeam(teamId) {
+      useApplicationStore().setIsLoading(true);
       api
         .get(`demands/team/${teamId}`)
         .then((response) => {
@@ -39,10 +41,12 @@ export default {
               ...demand,
               open: false,
             }))
+            // demandStore.storeTasks(response.data.data[].)
           );
         })
-        .catch(() => {
-          alert("Erro ao buscar as demandas do time");
+        .catch((e) => {
+          alert(e);
+          console.log(e);
         })
         .finally(() => {
           this.$router.push({
@@ -51,6 +55,7 @@ export default {
               id: teamId,
             },
           });
+          useApplicationStore().setIsLoading(false);
         });
     },
   },

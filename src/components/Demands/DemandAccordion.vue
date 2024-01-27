@@ -9,7 +9,7 @@
       class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
     >
       <div>
-        {{ demand.id }} - {{ demand.title }} - {{ demand.tasks.length }} tasks
+        {{ demand.id }} - {{ demand.title }} - {{ demand?.tasks?.length }} tasks
       </div>
       <img
         v-if="demand.open"
@@ -47,42 +47,56 @@
           </b>
         </p>
       </div>
-      <h3 class="text-center font-bold">Tasks</h3>
+      <div class="flex justify-between">
+        <h3 class="text-center font-bold">Tasks</h3>
+        <button
+          @click="openModal(index, demand.id)"
+          class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"
+        >
+          Adicionar Tarefa
+        </button>
+        <Modal ref="modal" :demand-id="demand.id" />
+      </div>
       <div
         v-for="task in demand.tasks"
         class="w-full my-2 rounded border border-gray-300 hover:translate-x-1.5"
       >
-        <div
-          class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
+        <router-link
+          @click.stop.prevent="getTask(task.id)"
+          :to="{
+            name: 'task',
+            params: {
+              task: task.id,
+            },
+          }"
         >
-          <router-link
-            @click.stop.prevent="getTask(task.id)"
-            :to="{
-              name: 'task',
-              params: {
-                task: task.id,
-              },
-            }"
+          <div
+            class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
           >
             {{ task.title }}
             {{ task.description }}
             {{ task.status }}
             {{ task.deadline }}
-          </router-link>
-        </div>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import api from "../../services/api";
 import { useDemandStore } from "../../stores/DemandStore";
 import { useTaskStore } from "../../stores/TaskStore";
+import Modal from "../Tasks/AddTaskModal.vue";
 
 const demandStore = useDemandStore();
 const taskStore = useTaskStore();
 export default {
   name: "DemandAccordion",
+  components: {
+    Modal,
+  },
   data() {
     return {
       spinner: {
@@ -97,7 +111,27 @@ export default {
     },
 
     getTask(taskId) {
-      taskStore.getTask(taskId);
+      taskStore.getTask(taskId, this.$router);
+    },
+
+    openModal(index, demandId) {
+      this.$refs.modal[index].openModal();
+      this.getUsersByTeamsOfDemands(demandId);
+      demandStore.storeDemandIndex(index);
+      console.log(demandStore.demandIndex);
+    },
+
+    getUsersByTeamsOfDemands(demandId) {
+      api
+        .get(`demands/users/${demandId}`)
+        .then((response) => {
+          const data = response.data.data.map((user) => ({
+            ...user,
+            name: `${user.first_name} ${user.last_name}`,
+          }));
+          demandStore.storeUsersToAdd(data);
+        })
+        .catch((e) => alert(e));
     },
   },
 };
