@@ -1,14 +1,10 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
+import { Customer } from "../types/Customer";
 
 export const useCustomerStore = defineStore("customer", {
   state: () => ({
-    customers: [] as {
-      id: string;
-      name: string;
-      email: string;
-      entry_date: Date;
-    }[],
+    customers: [] as Customer[],
   }),
   actions: {
     storeCustomers(customers) {

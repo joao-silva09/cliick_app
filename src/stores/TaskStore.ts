@@ -1,33 +1,11 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
+import { Task } from "../types/Task";
 
 export const useTaskStore = defineStore("task", {
   state: () => ({
-    tasks: [] as {
-      id: string;
-      title: string;
-      description: string;
-      status: string;
-      deadline: Date;
-      users: [];
-      messages: [];
-      demand: {};
-    }[],
-    task: {} as {
-      id: string;
-      title: string;
-      description: string;
-      status: string;
-      deadline: Date;
-      users: [];
-      messages: Array<{
-        id: string;
-        message: string;
-        username: string;
-        created_at: Date;
-      }>;
-      demand: {};
-    },
+    tasks: [] as Task[],
+    task: {} as Task,
   }),
   actions: {
     storeTasks(tasks) {

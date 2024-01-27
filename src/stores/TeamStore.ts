@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
+import { useApplicationStore } from "./ApplicationStore";
 
 export const useTeamStore = defineStore("team", {
   state: () => ({
@@ -8,7 +9,7 @@ export const useTeamStore = defineStore("team", {
       name: string;
       description: string;
       users: [];
-    }[]
+    }[],
   }),
 
   actions: {
@@ -16,9 +17,14 @@ export const useTeamStore = defineStore("team", {
       this.teams = teams;
     },
     getTeams() {
-      api.get("teams").then((response) => {
-        this.storeTeams(response.data.data);
-      });
+      useApplicationStore().setIsLoading(true);
+      api
+        .get("teams")
+        .then((response) => {
+          this.storeTeams(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
     },
   },
 
