@@ -82,7 +82,7 @@ export default {
       this.spinner.login = true;
 
       api
-        .post("http://127.0.0.1:8000/api/login", payload)
+        .post("login", payload)
         .then((response) => {
           const token = `${response.data.token_type} ${response.data.access_token}`;
           cookie.setToken(token);
