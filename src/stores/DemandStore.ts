@@ -9,7 +9,7 @@ export const useDemandStore = defineStore("demand", {
     demands: [] as Demand[],
     tasks: [] as Task[],
     usersToAdd: [] as User[],
-    demandIndex: Number
+    demandIndex: Number,
   }),
   actions: {
     storeDemands(demands) {
@@ -33,5 +33,7 @@ export const useDemandStore = defineStore("demand", {
     storeDemandIndex(index) {
       this.demandIndex = index;
     },
+
+    
   },
 });

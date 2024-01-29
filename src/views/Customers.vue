@@ -1,6 +1,12 @@
 <template>
   <div style="height: 300px">
     <h1 class="text-center mt-5">Clientes</h1>
+    <button
+      @click="openModal()"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800 transition-all float-right"
+    >
+      Adicionar cliente
+    </button>
 
     <ul>
       <li
@@ -11,13 +17,6 @@
         {{ customer.name }} - {{ customer.email }} - {{ customer.entry_date }}
       </li>
     </ul>
-
-    <button
-      @click="openModal()"
-      class="px-4 py-2 bg-blue-500 text-white rounded-md"
-    >
-      Adicionar cliente
-    </button>
 
     <Modal ref="modal" />
   </div>

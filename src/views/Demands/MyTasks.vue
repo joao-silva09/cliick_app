@@ -11,6 +11,7 @@
         @click.stop.prevent="getTask(task.id)"
       >
         <div>
+          [{{ task.demand?.customer?.name }}]
           {{ task.title }}
         </div>
         <div>

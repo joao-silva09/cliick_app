@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
 import { useApplicationStore } from "./ApplicationStore";
+import { Team } from "../types/team";
 
 export const useTeamStore = defineStore("team", {
   state: () => ({
@@ -10,6 +11,7 @@ export const useTeamStore = defineStore("team", {
       description: string;
       users: [];
     }[],
+    currentTeamToAddDemand: {} as Team,
   }),
 
   actions: {
@@ -25,6 +27,10 @@ export const useTeamStore = defineStore("team", {
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));
+    },
+
+    setCurrentTeamToAddDemand(team) {
+      this.currentTeamToAddDemand = team;
     },
   },
 

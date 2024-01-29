@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
 import { Task } from "../types/Task";
+import { useApplicationStore } from "./ApplicationStore";
 
 export const useTaskStore = defineStore("task", {
   state: () => ({
@@ -21,26 +22,33 @@ export const useTaskStore = defineStore("task", {
     },
 
     getMyTasks() {
-      api.get(`tasks`).then((response) => {
-        this.storeTasks(response.data.data);
-      });
+      useApplicationStore().setIsLoading(true);
+      api
+        .get(`tasks`)
+        .then((response) => {
+          this.storeTasks(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
     },
 
     getTask(taskId: Number, router: any) {
+      useApplicationStore().setIsLoading(true);
       api
         .get(`tasks/${taskId}`)
         .then((response) => {
           this.storeTask(response.data.data);
         })
         .catch((e) => alert(e))
-        .finally(() =>
+        .finally(() => {
           router.push({
             name: "task",
             params: {
               task: taskId,
             },
-          })
-        );
+          });
+          useApplicationStore().setIsLoading(false);
+        });
     },
   },
 });

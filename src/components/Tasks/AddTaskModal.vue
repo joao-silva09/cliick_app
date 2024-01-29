@@ -89,6 +89,7 @@ import { useUserStore } from "../../stores/UserStore";
 import { useDemandStore } from "../../stores/DemandStore";
 import { Task } from "../../types/Task";
 import { useApplicationStore } from "../../stores/ApplicationStore";
+import { TaskStatus } from "../../types/Enums";
 
 const userStore = useUserStore();
 const demandStore = useDemandStore();
@@ -127,7 +128,7 @@ export default {
       const payload = {
         title: this.task.title,
         description: this.task.description,
-        status: this.task.status,
+        status: TaskStatus.Pending,
         deadline: this.task.deadline,
         demand_id: this.$props.demandId,
         users_ids: [
@@ -156,6 +157,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Estilos específicos da modal aqui, se necessário */
-</style>
+<style scoped></style>

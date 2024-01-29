@@ -16,25 +16,23 @@
       alt=""
       class="w-5 h-5 mr-2"
     />
-
     <Modal ref="modal" />
   </div>
 </template>
 
 <script lang="ts">
 import CardTeam from "../../components/Demands/CardTeam.vue";
+import Modal from "../../components/Demands/AddDemandModal.vue";
 import { useDemandStore } from "../../stores/DemandStore";
 import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
-import Modal from "../../components/Demands/AddDemandModal.vue";
-import api from "../../services/api";
 
 const demandStore = useDemandStore();
 export default {
   name: "DemandsList",
   components: {
+    Modal,
     CardTeam,
     DemandAccordion,
-    Modal,
   },
 
   data() {

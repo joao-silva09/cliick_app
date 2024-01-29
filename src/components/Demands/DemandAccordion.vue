@@ -10,6 +10,8 @@
     >
       <div>
         {{ demand.id }} - {{ demand.title }} - {{ demand?.tasks?.length }} tasks
+        {{ demand?.teams?.map((team) => team.name) }}
+        {{ demand.customer.name }}
       </div>
       <img
         v-if="demand.open"
@@ -51,7 +53,7 @@
         <h3 class="text-center font-bold">Tasks</h3>
         <button
           @click="openModal(index, demand.id)"
-          class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"
+          class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 transition-all"
         >
           Adicionar Tarefa
         </button>
@@ -59,7 +61,7 @@
       </div>
       <div
         v-for="task in demand.tasks"
-        class="w-full my-2 rounded border border-gray-300 hover:translate-x-1.5"
+        class="w-full my-2 rounded border border-gray-300 hover:translate-x-1.5 transition-all"
       >
         <router-link
           @click.stop.prevent="getTask(task.id)"
