@@ -37,6 +37,7 @@ export default {
   mounted() {
     teamStore.getTeams();
     useCustomerStore().getCustomers();
+    demandStore.clearTeamsAndCustomer();
     // teams = teamStore.getAllTeams()
   },
   methods: {
@@ -45,13 +46,11 @@ export default {
       api
         .get(`demands/team/${teamId}`)
         .then((response) => {
-          demandStore.storeDemands(
-            response.data.data.map((demand) => ({
-              ...demand,
-              open: false,
-            }))
-            // demandStore.storeTasks(response.data.data[].)
-          );
+          const demandsToAdd = response.data.data.demands.map((demand) => ({
+            ...demand,
+            open: false,
+          }));
+          demandStore.storeDemandsByTeam(demandsToAdd, response.data.data);
         })
         .catch((e) => {
           alert(e);

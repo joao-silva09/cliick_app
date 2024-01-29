@@ -5,13 +5,7 @@ import { Team } from "../types/team";
 
 export const useTeamStore = defineStore("team", {
   state: () => ({
-    teams: [] as {
-      id: string;
-      name: string;
-      description: string;
-      users: [];
-    }[],
-    currentTeamToAddDemand: {} as Team,
+    teams: [] as Team[],
   }),
 
   actions: {
@@ -27,10 +21,6 @@ export const useTeamStore = defineStore("team", {
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));
-    },
-
-    setCurrentTeamToAddDemand(team) {
-      this.currentTeamToAddDemand = team;
     },
   },
 

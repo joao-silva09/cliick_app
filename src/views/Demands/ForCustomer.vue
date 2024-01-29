@@ -47,6 +47,7 @@ export default {
   mounted() {
     customerStore.getCustomers();
     useTeamStore().getTeams();
+    demandStore.clearTeamsAndCustomer();
   },
   methods: {
     getDemandsByCustomer(customerId) {
@@ -54,9 +55,12 @@ export default {
       api
         .get(`demands/customer/${customerId}`)
         .then((response) => {
-          demandStore.storeDemands(response.data.data);
+          demandStore.storeDemandsByCustomer(response.data.data);
         })
-        .catch((e) => alert(e))
+        .catch((e) => {
+          alert(e);
+          console.log(e);
+        })
         .finally(() => {
           this.$router.push({
             name: "demandsList",

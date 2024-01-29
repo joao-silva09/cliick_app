@@ -11,4 +11,6 @@ export type Demand = {
     customer?: Customer;
     teams?: Array<Team>;
     tasks?: Array<Task>;
+
+    open?: boolean;
 }

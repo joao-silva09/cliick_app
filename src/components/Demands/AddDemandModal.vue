@@ -49,7 +49,7 @@
             :options="$pinia.state.value.customer.customers"
             label="name"
             id="customer"
-            class="bg-gray-300"
+            class="bg-gray-300 mb-2"
             @update:modelValue="console.log(demand.customer?.id)"
           />
 
@@ -60,9 +60,10 @@
             label="name"
             multiple
             id="teams"
-            class="bg-gray-300"
+            class="bg-gray-300 mb-2"
             @update:modelValue="handleAddTeam"
             @remove="handleRemoveTeam"
+            appendToBody 
           />
         </div>
 
@@ -105,6 +106,8 @@ export default {
     vSelect,
   },
   data() {
+    const defaultTeam = this.$pinia.state.value.demand.teamWithDemands;
+
     return {
       isOpen: false,
       demand: {
@@ -113,8 +116,12 @@ export default {
         description: "",
         status: "",
         deadline: null,
-        customer: null,
-        teams: [],
+        customer: this.$pinia.state.value.demand.customerWithDemands ?? [],
+        teams:
+          Object.keys(this.$pinia.state.value.demand.teamWithDemands).length ===
+          0
+            ? []
+            : [this.$pinia.state.value.demand.teamWithDemands],
         tasks: [],
       } as unknown as Demand,
     };
@@ -135,15 +142,15 @@ export default {
         description: this.demand.description,
         status: DemandStatus.Pending,
         deadline: this.demand.deadline,
-        customer_id: this.demand.customer.id,
-        teams_ids: this.demand.teams.map((team) => team.id),
+        customer_id: this.demand!.customer.id,
+        teams_ids: this.demand!.teams.map((team) => team.id),
       };
 
       api
         .post("demands", payload)
         .then((response) => {
           const currentDemands = demandStore.demands;
-          currentDemands.push(response.data.data);
+          currentDemands?.push(response.data.data);
           demandStore.storeDemands(currentDemands);
 
           // if (this.$route.name === "demandsForCustomer") {
@@ -185,11 +192,15 @@ export default {
       teamStore.storeTeams(
         teamStore.teams.filter((team) => !this.demand.teams.includes(team))
       );
+
+      console.log(this.demand.teams);
     },
 
     handleRemoveTeam(removedTeam) {
       // Adicionar o time removido de volta à lista de opções gerenciada pelo Pinia
       this.$pinia.state.value.team.teams.push(removedTeam);
+
+      console.log(this.demand.teams);
     },
   },
   watch: {

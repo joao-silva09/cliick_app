@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="flex justify-between mb-4">
-      <h1 class="text-center font-bold text-2xl">Demandas</h1>
+      <h1 class="text-center font-bold text-2xl">Demandas de {{ $pinia.state.value.demand.customerWithDemands.name ?? $pinia.state.value.demand.teamWithDemands.name }}</h1>
       <button
         @click="openModal()"
         class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"

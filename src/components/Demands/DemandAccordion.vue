@@ -9,9 +9,10 @@
       class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
     >
       <div>
-        {{ demand.id }} - {{ demand.title }} - {{ demand?.tasks?.length }} tasks
-        {{ demand?.teams?.map((team) => team.name) }}
-        {{ demand.customer.name }}
+        {{ demand.id }} - {{ demand.title }} -
+        {{ demand?.tasks?.length }} tasks
+        {{ demand?.teams?.map((team) => team.name ?? "") }}
+        {{ demand.name }}
       </div>
       <img
         v-if="demand.open"
@@ -108,8 +109,8 @@ export default {
   },
   methods: {
     toggleItem(index) {
-      demandStore.$state.demands[index].open =
-        !demandStore.$state.demands[index].open;
+      demandStore.demands[index].open =
+        !demandStore.demands[index].open;
     },
 
     getTask(taskId) {
