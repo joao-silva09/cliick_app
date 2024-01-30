@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 300px">
+  <div>
     <div class="flex justify-between mb-4 items-center">
       <h2 class="text-xl mb-8">Times</h2>
       <button
@@ -10,16 +10,19 @@
       </button>
     </div>
 
-    <ul class="flex gap-8">
+    <ul class="grid grid-cols-6 gap-4 max-h-[70vh] overflow-auto">
       <li
         v-for="(team, index) in $pinia.state.value.team.teams"
         :key="index"
         class="bg-gray-200 my-2 px-4 py-2"
       >
-        <h3 class="text-lg">
-          {{ team.name }}
-        </h3>
-        - {{ team.email }} - {{ team.entry_date }}
+        <div class="flex justify-between">
+          <h3 class="text-lg mb-3">
+            {{ team.name }}
+          </h3>
+          <ActionIconMenu :team="team" />
+        </div>
+        <p v-for="(user, index) in team.users">{{ user.full_name }}</p>
       </li>
     </ul>
 
@@ -31,14 +34,17 @@
 import api from "../services/api";
 import { useTeamStore } from "../stores/TeamStore";
 import Modal from "../components/Teams/AddTeamModal.vue";
+import ActionIconMenu from "../components/Teams/ActionIconMenu.vue";
 import { useApplicationStore } from "../stores/ApplicationStore";
+import { useUserStore } from "../stores/UserStore";
 
 const teamStore = useTeamStore();
 export default {
   name: "Teams",
 
   components: {
-    Modal,
+    ActionIconMenu,
+    Modal
   },
 
   data() {
@@ -47,6 +53,7 @@ export default {
 
   created() {
     this.getTeams();
+    this.getUsers();
   },
 
   methods: {
@@ -56,6 +63,18 @@ export default {
         .get("teams")
         .then((response) => {
           teamStore.storeTeams(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
+    },
+
+    getUsers() {
+      useApplicationStore().setIsLoading(true);
+      api
+        .get("me/all")
+        .then((response) => {
+          useUserStore().storeUsers(response.data.data);
+          teamStore.storeUsersToAdd(response.data.data);
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));

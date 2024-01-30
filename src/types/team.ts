@@ -1,5 +1,6 @@
 import { Company } from "./Company";
 import { Demand } from "./Demand";
+import { User } from "./User";
 
 export type Team = {
   id?: Number;
@@ -7,4 +8,5 @@ export type Team = {
   name?: String;
   company?: Company;
   demands?: Array<Demand>;
+  users?: Array<User>;
 };

@@ -6,6 +6,7 @@ export type User = {
     first_name?: String;
     last_name?: String;
     email?: String;
+    full_name?: String;
     company?: Company;
     teams?: Array<Team>;
 }
