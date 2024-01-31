@@ -66,6 +66,10 @@
 
 <script lang="ts">
 import api from "../../services/api";
+import { useApplicationStore } from "../../stores/ApplicationStore";
+import { useCustomerStore } from "../../stores/CustomerStore";
+
+const customerStore = useCustomerStore();
 export default {
   data() {
     return {
@@ -87,6 +91,7 @@ export default {
     },
 
     createCustomer() {
+      useApplicationStore().setIsLoading(true);
       const payload = {
         name: this.customer.name,
         email: this.customer.email,
@@ -94,9 +99,15 @@ export default {
         company_id: 1,
       };
 
-      api.post("customers", payload).then((response) => {
-        console.log(response);
-      });
+      api
+        .post("customers", payload)
+        .then((response) => {
+          const currentCustomers = customerStore.customers;
+          currentCustomers.unshift(response.data.data);
+          customerStore.storeCustomers(currentCustomers);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
 
       this.closeModal();
     },

@@ -86,6 +86,7 @@ export default {
   padding: 10px;
   cursor: pointer;
   user-select: none;
+  color: black;
 }
 
 .action-menu-item:hover {

@@ -1,18 +1,19 @@
 <template>
   <div style="height: 300px">
-    <h1 class="text-center mt-5">Clientes</h1>
-    <button
-      @click="openModal()"
-      class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800 transition-all float-right"
-    >
-      Adicionar cliente
-    </button>
-
-    <ul>
+    <div class="flex justify-between mb-4 items-center">
+      <h2 class="text-xl mb-8">Clientes</h2>
+      <button
+        @click="openModal()"
+        class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"
+      >
+        Adicionar Cliente
+      </button>
+    </div>
+    <ul class="grid grid-cols-6 gap-3">
       <li
-        v-for="customer in customers"
+        v-for="customer in $pinia.state.value.customer.customers"
         :key="customer.id"
-        class="bg-gray-100 my-2"
+        class="bg-gray-200 rounded shadow-xl my-2 p-4"
       >
         {{ customer.name }} - {{ customer.email }} - {{ customer.entry_date }}
       </li>
@@ -26,6 +27,7 @@
 import api from "../services/api";
 import { useCustomerStore } from "../stores/CustomerStore";
 import Modal from "../components/Customers/AddCustomerModal.vue";
+import { useApplicationStore } from "../stores/ApplicationStore";
 const store = useCustomerStore();
 
 export default {
@@ -36,23 +38,14 @@ export default {
   },
 
   data() {
-    return {
-      customers: [],
-    };
+    return {};
   },
 
   created() {
-    this.getCustomers();
+    store.getCustomers();
   },
 
   methods: {
-    getCustomers() {
-      api.get("customers").then((response) => {
-        this.customers = response.data.data;
-        store.storeCustomers(response.data.data);
-      });
-    },
-
     openModal() {
       this.$refs.modal.openModal();
     },
