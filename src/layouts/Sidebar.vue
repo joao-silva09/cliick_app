@@ -1,22 +1,29 @@
 <!-- Sidebar.vue -->
 <template>
-  <aside class="bg-gray-800 text-white p-4 h-[90vh]">
+  <aside
+    class="bg-white p-4 h-[90vh] w-[24vh] text-black font-semibold border-r border-blue-200"
+  >
     <!-- Conteúdo do menu lateral vai aqui -->
     Olá, {{ userName }} <br /><br />
-    <ul>
-      <li class="hover:text-blue-700 cursor-pointer">
-        <router-link :to="{ name: 'home' }">Página Inicial</router-link>
+    <ul class="flex flex-col gap-1.5 mt-2">
+      <li class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center">
+        <HomeIcon class="h-5 w-5" />
+        <router-link :to="{ name: 'home' }">Home</router-link>
       </li>
-      <li class="hover:text-blue-700 cursor-pointer">
+      <li class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center">
+        <BriefcaseIcon class="h-5 w-5" />
         <router-link :to="{ name: 'customers' }">Clientes</router-link>
       </li>
-      <li class="hover:text-blue-700 cursor-pointer">
+      <li class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center">
+        <UserGroupIcon class="h-5 w-5" />
         <router-link :to="{ name: 'teams' }">Times</router-link>
       </li>
-      <li class="hover:text-blue-700 cursor-pointer">
+      <li class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center">
+        <ClipboardDocumentCheckIcon class="h-5 w-5" />
         <router-link :to="{ name: 'overview' }">Demandas</router-link>
       </li>
-      <li class="hover:text-blue-700 cursor-pointer">
+      <li class="hover:text-blue-700 cursor-pointer flex gap-1.5 items-center">
+        <CurrencyDollarIcon class="h-5 w-5" />
         <router-link :to="{ name: 'financial' }">Financeiro</router-link>
       </li>
       <!-- Adicione mais itens de menu conforme necessário -->
@@ -27,9 +34,24 @@
 <script lang="ts">
 import { useUserStore } from "../stores/UserStore";
 
+import {
+BriefcaseIcon,
+ClipboardDocumentCheckIcon,
+  CurrencyDollarIcon,
+  HomeIcon,
+  UserGroupIcon,
+} from "@heroicons/vue/24/outline";
+
 const userStore = useUserStore();
 
 export default {
+  components: {
+    CurrencyDollarIcon,
+    ClipboardDocumentCheckIcon,
+    UserGroupIcon,
+    HomeIcon,
+    BriefcaseIcon
+},
   data() {
     return {
       userName: userStore.user.first_name,
