@@ -7,9 +7,7 @@
       <div
         v-for="task in $pinia.state.value.task.tasks"
         :class="
-          new Date(task.deadline) > new Date()
-            ? 'bg-cyan-100'
-            : 'bg-red-200'
+          new Date(task.deadline) > new Date() ? 'bg-cyan-200' : 'bg-red-300'
         "
         class="w-full border rounded border-gray-600 p-2 bg-cyan-100 flex justify-between cursor-pointer hover:translate-x-2 hover:transition-all"
         @click.stop.prevent="getTask(task.id)"
@@ -18,8 +16,10 @@
           [{{ task.demand?.customer?.name }}]
           {{ task.title }}
         </div>
-        <div>
-          {{ new Date(task.deadline).toLocaleDateString() }}
+        <div class="flex gap-3">
+          <div>
+            {{ new Date(task.deadline).toLocaleDateString() }}
+          </div>
         </div>
       </div>
     </div>
@@ -35,9 +35,11 @@ export default {
   data() {
     return {};
   },
+
   created() {
     taskStore.getMyTasks();
   },
+
   methods: {
     getTask(taskId: Number) {
       taskStore.getTask(taskId, this.$router);
