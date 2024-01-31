@@ -1,10 +1,18 @@
 <template>
   <div class="grid grid-cols-2 gap-2">
     <div class="w-full flex flex-col gap-8">
-      <div class="w-full border border-red-700 p-3 rounded-sm">
-        <h2 class="text-xl">
-          {{ $pinia.state.value.task.task.title }}
-        </h2>
+      <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl">
+            {{ $pinia.state.value.task.task.title }}
+          </h2>
+          <div>
+            <CheckCircleIcon
+              class="w-8 h-8 text-green-500 cursor-pointer hover:text-green-800 hover:scale-110"
+              @click="openCompleteTaskModal"
+            />
+          </div>
+        </div>
         <h4>
           {{ $pinia.state.value.task.task.description }}
         </h4>
@@ -23,7 +31,9 @@
         </p>
       </div>
 
-      <div class="w-full border border-red-700 p-3 rounded-sm">
+      <CompleteTaskModal ref="completeTaskModal" />
+
+      <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
         <h2>Atribuído a:</h2>
         <div v-for="user in $pinia.state.value.task.task.users" :key="user.id">
           {{ user.first_name + " " + user.last_name }}
@@ -34,7 +44,7 @@
     <!-- h-screen rounded-sm p-4 flex flex-1 flex-col justify-end overflow-y-auto -->
     <div>
       <div
-        class="px-3 messages h-[75vh] overflow-y-auto"
+        class="px-3 messages h-[75vh] overflow-y-auto bg-sky-100 rounded p-2"
         ref="messageContainer"
       >
         <div
@@ -65,8 +75,10 @@
 import { useTaskStore } from "../../stores/TaskStore";
 import { useUserStore } from "../../stores/UserStore";
 import Message from "../../components/Tasks/Message.vue";
+import CompleteTaskModal from "../../components/Tasks/CompleteTaskModal.vue";
 import api from "../../services/api";
 import { Message as MessageType } from "../../types/Message";
+import { CheckCircleIcon } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 const taskStore = useTaskStore();
@@ -74,9 +86,12 @@ export default {
   name: "task",
   components: {
     Message,
+    CompleteTaskModal,
+    CheckCircleIcon,
   },
   data() {
     return {
+      isCompleteTaskModalOpen: false,
       contentMessage: "",
       userName: userStore.user.first_name + " " + userStore.user.last_name,
     };
@@ -88,6 +103,10 @@ export default {
     this.scrollToBottom();
   },
   methods: {
+    openCompleteTaskModal() {
+      this.$refs.completeTaskModal.openModal();
+    },
+
     addMessage() {
       const payload = {
         message: this.contentMessage,
