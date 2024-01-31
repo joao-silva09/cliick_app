@@ -10,11 +10,11 @@
       </button>
     </div>
 
-    <ul class="grid grid-cols-6 gap-4 max-h-[70vh] overflow-auto">
+    <ul class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
       <li
         v-for="(team, index) in $pinia.state.value.team.teams"
         :key="index"
-        class="bg-gray-200 my-2 px-4 py-2"
+        class="bg-[#1B4B73] rounded my-2 p-4 text-white"
       >
         <div class="flex justify-between">
           <h3 class="text-lg mb-3">
@@ -44,7 +44,7 @@ export default {
 
   components: {
     ActionIconMenu,
-    Modal
+    Modal,
   },
 
   data() {
