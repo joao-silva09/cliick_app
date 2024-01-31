@@ -35,14 +35,6 @@
             class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
           />
 
-          <label for="status">Status</label>
-          <input
-            v-model="task.status"
-            type="text"
-            id="status"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
-          />
-
           <label for="deadline">Prazo</label>
           <input
             v-model="task.deadline"
@@ -108,7 +100,6 @@ export default {
       task: {
         title: "",
         description: "",
-        status: "",
         deadline: null,
         users: [],
       },
