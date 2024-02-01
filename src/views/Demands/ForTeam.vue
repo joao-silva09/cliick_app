@@ -2,7 +2,7 @@
   <div>
     <h2 class="text-xl mb-8">Demandas Por Time</h2>
 
-    <div class="grid grid-cols-5 gap-2">
+    <div class="grid grid-cols-5 gap-2 h-32">
       <div v-for="team in $pinia.state.value.team.teams" class="flex">
         <CardTeam
           :team="team"
