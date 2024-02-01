@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-slate-950 rounded-sm flex w-full hover:bg-slate-600 hover:translate-y-1 hover:transition-all cursor-pointer p-2"
+    class="text-xl font-bold border border-slate-950 rounded-sm flex flex-col pl-5 pb-5 justify-end h-full w-full hover:bg-slate-600 hover:translate-y-1 hover:transition-all cursor-pointer p-2"
   >
     <!-- {{ this.team }} -->
     {{ this.team.name }}
