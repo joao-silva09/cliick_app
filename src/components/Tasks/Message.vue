@@ -4,8 +4,8 @@
       {{ $props.username }}
     </h5>
     <div
-      class="bg-blue-300 shadow-xl p-1.5 rounded-md text-base"
-      :class="sentByMe ? '' : 'bg-slate-200'"
+      class="shadow-xl p-1.5 rounded-md text-base"
+      :class="getMessageTypeClass()"
     >
       <p>
         {{ $props.content }}
@@ -14,10 +14,13 @@
         {{ $props.date }}
       </span>
     </div>
+
   </div>
 </template>
 
 <script lang="ts">
+import { MessageTypeEnum } from "../../types/Enums";
+
 export default {
   name: "Message",
   props: {
@@ -25,11 +28,28 @@ export default {
     username: String,
     date: String,
     sentByMe: Boolean,
+    messageType: {
+      type: String,
+      required: true,
+      // validator: value => Object.values(MessageTypeEnum).includes(value) // Valida se o valor está entre os valores do enum
+    },
   },
   data() {
-    return {};
+    return { messageType: MessageTypeEnum };
   },
-  methods: {},
+  methods: {
+    getMessageTypeClass() {
+      if (this.$props.messageType === this.messageType.Default) {
+        return "bg-blue-200";
+      } else if (this.$props.messageType === this.messageType.RequestApproval) {
+        return "bg-yellow-400 py-3";
+      } else if (this.$props.messageType === this.messageType.Approved) {
+        return "bg-green-300";
+      } else {
+        return ""; // Pode retornar uma classe padrão ou vazia caso necessário
+      }
+    },
+  },
 };
 </script>
 

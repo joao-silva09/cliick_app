@@ -6,10 +6,18 @@
           <h2 class="text-xl">
             {{ $pinia.state.value.task.task.title }}
           </h2>
+
+          <!-- TODO: Criar modal para solicitar aprovação no caso de funcionário -->
+          <!-- <div>
+            <CheckCircleIcon
+              class="w-8 h-8 text-yellow-500 cursor-pointer hover:text-yellow-800 hover:scale-110"
+              @click="openRequestApprovalTaskModal"
+            />
+          </div> -->
           <div>
             <CheckCircleIcon
               class="w-8 h-8 text-green-500 cursor-pointer hover:text-green-800 hover:scale-110"
-              @click="openCompleteTaskModal"
+              @click="openRequestApprovalTaskModal"
             />
           </div>
         </div>
@@ -31,7 +39,7 @@
         </p>
       </div>
 
-      <CompleteTaskModal ref="completeTaskModal" />
+      <RequestApprovalTaskModal ref="requestApprovalTaskModal" />
 
       <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
         <h2>Atribuído a:</h2>
@@ -57,7 +65,15 @@
             :content="message.message"
             :date="new Date(message.created_at).toLocaleString()"
             :sent-by-me="message.username === userName"
+            :message-type="message.message_type"
           />
+          <!-- <RequestApprovalMessage
+            v-else-if="message.message_type === 'request_approval'"
+            :username="message.username"
+            :content="message.message"
+            :date="new Date(message.created_at).toLocaleString()"
+            :sent-by-me="message.username === userName"
+          /> -->
         </div>
       </div>
       <input
@@ -75,9 +91,10 @@
 import { useTaskStore } from "../../stores/TaskStore";
 import { useUserStore } from "../../stores/UserStore";
 import Message from "../../components/Tasks/Message.vue";
-import CompleteTaskModal from "../../components/Tasks/CompleteTaskModal.vue";
+import RequestApprovalMessage from "../../components/Tasks/Message.vue";
+import RequestApprovalTaskModal from "../../components/Tasks/RequestApprovalTaskModal.vue";
 import api from "../../services/api";
-import { Message as MessageType } from "../../types/Message";
+import { Message as MessageTypes } from "../../types/Message";
 import { CheckCircleIcon } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
@@ -86,8 +103,9 @@ export default {
   name: "task",
   components: {
     Message,
-    CompleteTaskModal,
+    RequestApprovalTaskModal,
     CheckCircleIcon,
+    RequestApprovalMessage,
   },
   data() {
     return {
@@ -103,8 +121,8 @@ export default {
     this.scrollToBottom();
   },
   methods: {
-    openCompleteTaskModal() {
-      this.$refs.completeTaskModal.openModal();
+    openRequestApprovalTaskModal() {
+      this.$refs.requestApprovalTaskModal.openModal();
     },
 
     addMessage() {
@@ -115,7 +133,7 @@ export default {
       api
         .post("messages", payload)
         .then((response) => {
-          const currentMessages: MessageType[] = taskStore.task.messages;
+          const currentMessages: MessageTypes[] = taskStore.task.messages;
           currentMessages?.push(response.data.data);
           taskStore.storeMessage(currentMessages);
           // this.messagesList.push(response.data.data);
