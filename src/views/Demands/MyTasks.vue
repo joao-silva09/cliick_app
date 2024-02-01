@@ -5,10 +5,9 @@
     </div>
     <div class="flex gap-3 flex-col">
       <div
-        v-for="task in $pinia.state.value.task.tasks"
-        :class="
-          new Date(task.deadline) > new Date() ? 'bg-cyan-200' : 'bg-red-300'
-        "
+        v-for="(task, index) in $pinia.state.value.task.tasks"
+        :key="index"
+        :class="getTaskColor(task, index)"
         class="w-full border rounded border-gray-600 p-2 bg-cyan-100 flex justify-between cursor-pointer hover:translate-x-2 hover:transition-all"
         @click.stop.prevent="getTask(task.id)"
       >
@@ -28,6 +27,8 @@
 
 <script lang="ts">
 import { useTaskStore } from "../../stores/TaskStore";
+import { TaskStatus } from "../../types/Enums";
+import { Task } from "../../types/Task";
 
 const taskStore = useTaskStore();
 export default {
@@ -43,6 +44,18 @@ export default {
   methods: {
     getTask(taskId: Number) {
       taskStore.getTask(taskId, this.$router);
+    },
+
+    getTaskColor(task: Task, index) {
+      if (task.status === TaskStatus.Completed) {
+        return "bg-green-400";
+      } else if (task.status === TaskStatus.AwaitingApproval) {
+        return "bg-yellow-400";
+      } else if (new Date(task.deadline) > new Date()) {
+        return "bg-blue-300";
+      } else {
+        return "bg-red-400";
+      }
     },
   },
 };

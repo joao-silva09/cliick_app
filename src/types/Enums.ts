@@ -13,6 +13,6 @@ export enum MessageTypeEnum {
 
 export enum TaskStatus {
   Pending = "Pendente",
-  AwaitingApproval = "Aguardando Aprovação",
-  Completed = "Entregue",
+  AwaitingApproval = "Aguardando aprovação",
+  Completed = "Concluído",
 }
