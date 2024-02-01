@@ -14,7 +14,6 @@
         {{ $props.date }}
       </span>
     </div>
-
   </div>
 </template>
 
@@ -43,8 +42,11 @@ export default {
         return "bg-blue-200";
       } else if (this.$props.messageType === this.messageType.RequestApproval) {
         return "bg-yellow-400 py-3";
-      } else if (this.$props.messageType === this.messageType.Approved) {
-        return "bg-green-300";
+      } else if (
+        this.$props.messageType === this.messageType.Approved ||
+        this.$props.messageType === this.messageType.Completed
+      ) {
+        return "bg-green-400";
       } else {
         return ""; // Pode retornar uma classe padrão ou vazia caso necessário
       }

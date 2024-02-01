@@ -37,7 +37,7 @@ export const useDemandStore = defineStore("demand", {
     },
 
     storeTasks(tasks) {
-      this.customerWithDemands.demands![Number(this.$state.demandIndex)].tasks =
+      this.demands![Number(this.$state.demandIndex)].tasks =
         tasks;
     },
 

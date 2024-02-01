@@ -7,6 +7,8 @@ export enum DemandStatus {
 export enum MessageTypeEnum {
   Default = "default",
   RequestApproval = "request_approval",
+  Approved = "approved",
+  Completed = "completed",
 }
 
 export enum TaskStatus {

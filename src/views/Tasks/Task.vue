@@ -17,7 +17,7 @@
           <div>
             <CheckCircleIcon
               class="w-8 h-8 text-green-500 cursor-pointer hover:text-green-800 hover:scale-110"
-              @click="openRequestApprovalTaskModal"
+              @click="openCompleteTaskModal"
             />
           </div>
         </div>
@@ -39,7 +39,8 @@
         </p>
       </div>
 
-      <RequestApprovalTaskModal ref="requestApprovalTaskModal" />
+      <!-- <RequestApprovalTaskModal ref="requestApprovalTaskModal" /> -->
+      <CompleteTaskModal ref="completeTaskModal" />
 
       <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
         <h2>Atribuído a:</h2>
@@ -76,6 +77,7 @@
           /> -->
         </div>
       </div>
+      <!-- disabled="{{ $pinia.state.value.task.task.status === 'Concluído' }}" -->
       <input
         v-model="contentMessage"
         type="text"
@@ -92,7 +94,8 @@ import { useTaskStore } from "../../stores/TaskStore";
 import { useUserStore } from "../../stores/UserStore";
 import Message from "../../components/Tasks/Message.vue";
 import RequestApprovalMessage from "../../components/Tasks/Message.vue";
-import RequestApprovalTaskModal from "../../components/Tasks/RequestApprovalTaskModal.vue";
+// import RequestApprovalTaskModal from "../../components/Tasks/RequestApprovalTaskModal.vue";
+import CompleteTaskModal from "../../components/Tasks/CompleteTaskModal.vue";
 import api from "../../services/api";
 import { Message as MessageTypes } from "../../types/Message";
 import { CheckCircleIcon } from "@heroicons/vue/24/outline";
@@ -103,9 +106,10 @@ export default {
   name: "task",
   components: {
     Message,
-    RequestApprovalTaskModal,
+    // RequestApprovalTaskModal,
     CheckCircleIcon,
     RequestApprovalMessage,
+    CompleteTaskModal,
   },
   data() {
     return {
@@ -123,6 +127,10 @@ export default {
   methods: {
     openRequestApprovalTaskModal() {
       this.$refs.requestApprovalTaskModal.openModal();
+    },
+
+    openCompleteTaskModal() {
+      this.$refs.completeTaskModal.openModal();
     },
 
     addMessage() {

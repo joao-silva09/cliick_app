@@ -38,10 +38,10 @@
             Fechar
           </button>
           <button
-            @click="requestApproval"
+            @click="completeTask"
             class="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
-            Solicitar Aprovação
+            Concluir
           </button>
         </div>
       </div>
@@ -53,6 +53,7 @@
 import api from "../../services/api";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 import { useTaskStore } from "../../stores/TaskStore";
+import { MessageTypeEnum } from "../../types/Enums";
 
 const taskStore = useTaskStore();
 export default {
@@ -74,17 +75,22 @@ export default {
       this.isOpen = false;
     },
 
-    requestApproval() {
+    completeTask() {
       useApplicationStore().setIsLoading(true);
 
       const payload = {
         message: this.solution,
-      }
+      };
 
       api
-        .post(`tasks/${taskStore.task.id}/request-approval`, payload)
+        .post(`tasks/${taskStore.task.id}/complete`, payload)
         .then((response) => {
-          taskStore.storeTask(response.data.data);
+          const currentTasks = this.$pinia.state.value.task.task.messages;
+          currentTasks.push(response.data.data);
+          taskStore.storeMessage(currentTasks);
+          console.log(currentTasks);
+
+          taskStore.storeTaskStatus(MessageTypeEnum.Completed)
         })
         .catch((e) => alert(e))
         .finally(() => {

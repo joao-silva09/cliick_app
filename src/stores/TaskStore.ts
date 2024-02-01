@@ -17,6 +17,10 @@ export const useTaskStore = defineStore("task", {
       this.task = task;
     },
 
+    storeTaskStatus(status) {
+      this.task.status = status;
+    },
+
     storeMessage(messages) {
       this.task.messages = messages;
     },

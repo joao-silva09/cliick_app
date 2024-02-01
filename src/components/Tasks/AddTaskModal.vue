@@ -134,7 +134,7 @@ export default {
         .post("tasks", payload)
         .then((response) => {
           const taskList: any[] =
-            demandStore.customerWithDemands?.demands![
+            demandStore.demands![
               Number(demandStore.demandIndex)
             ].tasks ?? [];
           taskList.push(response.data.data);
