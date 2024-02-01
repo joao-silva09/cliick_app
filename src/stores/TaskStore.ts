@@ -36,6 +36,17 @@ export const useTaskStore = defineStore("task", {
         .finally(() => useApplicationStore().setIsLoading(false));
     },
 
+    getCompletedTasks() {
+      useApplicationStore().setIsLoading(true);
+      api
+        .get(`tasks/completed-tasks`)
+        .then((response) => {
+          this.storeTasks(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
+    },
+
     getTask(taskId: Number, router: any) {
       useApplicationStore().setIsLoading(true);
       api

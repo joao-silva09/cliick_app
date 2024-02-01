@@ -62,7 +62,7 @@ export const routes = [
             name: "overview",
             component: () =>
               import(
-                /* webpackChunkName: "forTeam" */ "../views/Demands/Overview.vue"
+                /* webpackChunkName: "Overview" */ "../views/Demands/Overview.vue"
               ),
           },
           {
@@ -70,7 +70,15 @@ export const routes = [
             name: "myTasks",
             component: () =>
               import(
-                /* webpackChunkName: "forTeam" */ "../views/Demands/MyTasks.vue"
+                /* webpackChunkName: "MyTasks" */ "../views/Demands/MyTasks.vue"
+              ),
+          },
+          {
+            path: "completed",
+            name: "completedTasks",
+            component: () =>
+              import(
+                /* webpackChunkName: "Completed" */ "../views/Demands/Completed.vue"
               ),
           },
           {
