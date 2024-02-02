@@ -1,5 +1,6 @@
 <template>
-  <div class="grid grid-cols-2 gap-2">
+  <BackIcon @click="goBack()" class="w-5 h-5 text-blue-600 cursor-pointer" />
+  <div class="grid grid-cols-2 gap-2 pt-5">
     <div class="w-full flex flex-col gap-8">
       <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
         <div class="flex justify-between items-center">
@@ -98,19 +99,25 @@ import RequestApprovalMessage from "../../components/Tasks/Message.vue";
 import CompleteTaskModal from "../../components/Tasks/CompleteTaskModal.vue";
 import api from "../../services/api";
 import { Message as MessageTypes } from "../../types/Message";
-import { CheckCircleIcon } from "@heroicons/vue/24/outline";
+import {
+  CheckCircleIcon,
+  ArrowLeftIcon as BackIcon,
+} from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 const taskStore = useTaskStore();
 export default {
   name: "task",
+
   components: {
     Message,
     // RequestApprovalTaskModal,
     CheckCircleIcon,
     RequestApprovalMessage,
     CompleteTaskModal,
+    BackIcon,
   },
+
   data() {
     return {
       isCompleteTaskModalOpen: false,
@@ -118,13 +125,20 @@ export default {
       userName: userStore.user.first_name + " " + userStore.user.last_name,
     };
   },
+
   created() {
     this.messagesList = taskStore.task.messages;
   },
+
   mounted() {
     this.scrollToBottom();
   },
+
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+
     openRequestApprovalTaskModal() {
       this.$refs.requestApprovalTaskModal.openModal();
     },
