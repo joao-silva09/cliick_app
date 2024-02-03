@@ -2,8 +2,7 @@
 <template>
   <header class="bg-blue-50 p-4 flex justify-between items-center h-[10vh]">
     <!-- Conteúdo do cabeçalho vai aqui -->
-    <img src="../assets/img/logo.png" class="w-16"/>
-    <button class="bg-blue-400" @click.stop.prevent="logout()">Sair</button>
+    <img src="../assets/img/logo.png" class="w-16" />
   </header>
 </template>
 
@@ -11,12 +10,7 @@
 import cookie from "../services/cookie";
 export default {
   name: "Header",
-  methods: {
-    logout() {
-      cookie.deleteToken();
-      this.$router.push("/login");
-    },
-  },
+  methods: {},
 };
 </script>
 
