@@ -8,11 +8,12 @@
       @click="toggleItem(index)"
       class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
     >
-      <div>
-        {{ demand.id }} - {{ demand.title }} -
-        {{ demand?.tasks?.length }} tasks
-        {{ demand?.teams?.map((team) => team.name ?? "") }}
-        {{ demand.name }}
+      <div class="flex gap-1">
+        <div v-if="demand.customer?.name">[{{ demand.customer?.name }}]</div>
+        <div v-if="demand.teams">
+          [{{ demand.teams.map((team) => team.name).join(", ") }}]
+        </div>
+        {{ demand.title }}
       </div>
       <img
         v-if="demand.open"
@@ -54,34 +55,28 @@
         <h3 class="text-center font-bold">Tasks</h3>
         <button
           @click="openModal(index, demand.id)"
-          class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 transition-all"
+          class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 transition-all mb-4"
         >
           Adicionar Tarefa
         </button>
         <Modal ref="modal" :demand-id="demand.id" />
       </div>
-      <div
-        v-for="task in demand.tasks"
-        class="w-full my-2 rounded border border-gray-300 hover:translate-x-1.5 transition-all"
-      >
-        <router-link
+      <div v-for="task in demand.tasks">
+        <div
+          :class="getTaskColor(task, index)"
+          class="w-full border rounded border-gray-600 p-2 mb-2 bg-cyan-100 flex justify-between cursor-pointer hover:translate-x-2 hover:transition-all"
           @click.stop.prevent="getTask(task.id)"
-          :to="{
-            name: 'task',
-            params: {
-              task: task.id,
-            },
-          }"
         >
-          <div
-            class="p-2 bg-blue-100 cursor-pointer flex items-center justify-between"
-          >
+          <div>
+            {{ task.demand?.customer?.name }}
             {{ task.title }}
-            {{ task.description }}
-            {{ task.status }}
-            {{ task.deadline }}
           </div>
-        </router-link>
+          <div class="flex gap-3">
+            <div>
+              {{ new Date(task.deadline).toLocaleDateString() }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -92,6 +87,8 @@ import api from "../../services/api";
 import { useDemandStore } from "../../stores/DemandStore";
 import { useTaskStore } from "../../stores/TaskStore";
 import Modal from "../Tasks/AddTaskModal.vue";
+import { TaskStatus } from "../../types/Enums";
+import { Task } from "../../types/Task";
 
 const demandStore = useDemandStore();
 const taskStore = useTaskStore();
@@ -109,8 +106,7 @@ export default {
   },
   methods: {
     toggleItem(index) {
-      demandStore.demands[index].open =
-        !demandStore.demands[index].open;
+      demandStore.demands[index].open = !demandStore.demands[index].open;
     },
 
     getTask(taskId) {
@@ -135,6 +131,18 @@ export default {
           demandStore.storeUsersToAdd(data);
         })
         .catch((e) => alert(e));
+    },
+
+    getTaskColor(task: Task, index) {
+      if (task.status === TaskStatus.Completed) {
+        return "bg-green-400";
+      } else if (task.status === TaskStatus.AwaitingApproval) {
+        return "bg-yellow-400";
+      } else if (new Date(task.deadline) > new Date()) {
+        return "bg-blue-300";
+      } else {
+        return "bg-red-400";
+      }
     },
   },
 };
