@@ -25,6 +25,8 @@ import CardTeam from "../../components/Demands/CardTeam.vue";
 import Modal from "../../components/Demands/AddDemandModal.vue";
 import { useDemandStore } from "../../stores/DemandStore";
 import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
+import { TaskStatus } from "../../types/Enums";
+import { Task } from "../../types/Task";
 
 const demandStore = useDemandStore();
 export default {
@@ -49,6 +51,18 @@ export default {
   methods: {
     openModal() {
       this.$refs.modal.openModal();
+    },
+    
+    getTaskColor(task: Task, index) {
+      if (task.status === TaskStatus.Completed) {
+        return "bg-green-400";
+      } else if (task.status === TaskStatus.AwaitingApproval) {
+        return "bg-yellow-400";
+      } else if (new Date(task.deadline) > new Date()) {
+        return "bg-blue-300";
+      } else {
+        return "bg-red-400";
+      }
     },
   },
 };
