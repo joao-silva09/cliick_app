@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { useApplicationStore } from "../../stores/ApplicationStore";
 
 const applicationStore = useApplicationStore();

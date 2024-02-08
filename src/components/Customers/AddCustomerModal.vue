@@ -64,7 +64,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../../services/api";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 import { useCustomerStore } from "../../stores/CustomerStore";

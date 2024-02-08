@@ -22,7 +22,7 @@
   </nav>
 </template>
 
-<script lang="ts">
+<script>
 import HeaderLinks from "../components/Layout/HeaderLinks.vue";
 import { useUserStore } from "../stores/UserStore";
 

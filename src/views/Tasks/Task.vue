@@ -107,7 +107,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { useTaskStore } from "../../stores/TaskStore";
 import { useUserStore } from "../../stores/UserStore";
 import Message from "../../components/Tasks/Message.vue";
@@ -115,7 +115,6 @@ import RequestApprovalMessage from "../../components/Tasks/Message.vue";
 // import RequestApprovalTaskModal from "../../components/Tasks/RequestApprovalTaskModal.vue";
 import CompleteTaskModal from "../../components/Tasks/CompleteTaskModal.vue";
 import api from "../../services/api";
-import { Message as MessageTypes } from "../../types/Message";
 import {
   CheckCircleIcon,
   ArrowLeftIcon as BackIcon,
@@ -176,7 +175,7 @@ export default {
       api
         .post("messages", payload)
         .then((response) => {
-          const currentMessages: MessageTypes[] = taskStore.task.messages;
+          const currentMessages = taskStore.task.messages;
           currentMessages?.push(response.data.data);
           taskStore.storeMessage(currentMessages);
           // this.messagesList.push(response.data.data);

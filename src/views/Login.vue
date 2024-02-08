@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from '../services/api';
 import cookie from '../services/cookie';
 import { useUserStore } from '../stores/UserStore';

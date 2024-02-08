@@ -20,13 +20,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import CardTeam from "../../components/Demands/CardTeam.vue";
 import Modal from "../../components/Demands/AddDemandModal.vue";
 import { useDemandStore } from "../../stores/DemandStore";
 import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
 import { TaskStatus } from "../../types/Enums";
-import { Task } from "../../types/Task";
 
 const demandStore = useDemandStore();
 export default {
@@ -53,7 +52,8 @@ export default {
       this.$refs.modal.openModal();
     },
     
-    getTaskColor(task: Task, index) {
+    // getTaskColor(task: Task, index) {
+    getTaskColor(task, index) {
       if (task.status === TaskStatus.Completed) {
         return "bg-green-400";
       } else if (task.status === TaskStatus.AwaitingApproval) {

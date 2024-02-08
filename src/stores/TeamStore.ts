@@ -32,12 +32,7 @@ export const useTeamStore = defineStore("team", {
   },
 
   getters: {
-    getAllTeams(): Array<{
-      id: string;
-      name: string;
-      description: string;
-      users: [];
-    }> {
+    getAllTeams(): Team[] {
       return this.teams;
     },
   },

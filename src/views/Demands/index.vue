@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { useDemandStore } from "../../stores/DemandStore";
 import Modal from "../../components/Demands/AddDemandModal.vue";
 const store = useDemandStore();

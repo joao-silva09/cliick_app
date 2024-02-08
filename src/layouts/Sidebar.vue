@@ -47,7 +47,7 @@
   </aside>
 </template>
 
-<script lang="ts">
+<script>
 import cookie from "../services/cookie";
 import { useUserStore } from "../stores/UserStore";
 

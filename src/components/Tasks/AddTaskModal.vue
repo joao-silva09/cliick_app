@@ -73,13 +73,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../../services/api";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import { useUserStore } from "../../stores/UserStore";
 import { useDemandStore } from "../../stores/DemandStore";
-import { Task } from "../../types/Task";
+// import { Task } from "../../types/Task";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 import { TaskStatus } from "../../types/Enums";
 
@@ -133,8 +133,10 @@ export default {
       api
         .post("tasks", payload)
         .then((response) => {
-          const taskList: any[] =
-            demandStore.demands![
+          // const taskList: any[] =
+          //   demandStore.demands![
+          const taskList =
+            demandStore.demands[
               Number(demandStore.demandIndex)
             ].tasks ?? [];
           taskList.push(response.data.data);

@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../services/api";
 import { useTeamStore } from "../stores/TeamStore";
 import Modal from "../components/Teams/AddTeamModal.vue";

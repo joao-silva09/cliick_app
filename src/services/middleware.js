@@ -3,6 +3,7 @@ import api from "./api";
 import { useUserStore } from "../stores/UserStore";
 
 export default {
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   redirectIfAuthenticated(to, from, next) {
     const token = Cookie.getToken();
     let n;

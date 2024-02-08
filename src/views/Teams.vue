@@ -22,7 +22,7 @@
           </h3>
           <ActionIconMenu :team="team" />
         </div>
-        <p v-for="(user, index) in team.users">{{ user.full_name }}</p>
+        <p v-for="user in team.users">{{ user.full_name }}</p>
       </li>
     </ul>
 
@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../services/api";
 import { useTeamStore } from "../stores/TeamStore";
 import Modal from "../components/Teams/AddTeamModal.vue";

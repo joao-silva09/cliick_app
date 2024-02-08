@@ -25,10 +25,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { useTaskStore } from "../../stores/TaskStore";
 import { TaskStatus } from "../../types/Enums";
-import { Task } from "../../types/Task";
 
 const taskStore = useTaskStore();
 export default {
@@ -42,11 +41,14 @@ export default {
   },
 
   methods: {
-    getTask(taskId: Number) {
+
+    // getTask(taskId: Number) {
+    getTask(taskId) {
       taskStore.getTask(taskId, this.$router);
     },
 
-    getTaskColor(task: Task, index) {
+    // getTaskColor(task: Task, index) {
+    getTaskColor(task, index) {
       if (task.status === TaskStatus.Completed) {
         return "bg-green-400";
       } else if (task.status === TaskStatus.AwaitingApproval) {

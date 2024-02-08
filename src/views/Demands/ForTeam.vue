@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { useTeamStore } from "../../stores/TeamStore";
 import { useDemandStore } from "../../stores/DemandStore";
 import { useCustomerStore } from "../../stores/CustomerStore";

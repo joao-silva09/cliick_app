@@ -23,7 +23,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../services/api";
 import { useCustomerStore } from "../stores/CustomerStore";
 import Modal from "../components/Customers/AddCustomerModal.vue";
