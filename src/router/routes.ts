@@ -57,14 +57,14 @@ export const routes = [
                 /* webpackChunkName: "forTeam" */ "../views/Demands/index.vue"
               ),
           },
-          {
-            path: "overview",
-            name: "overview",
-            component: () =>
-              import(
-                /* webpackChunkName: "Overview" */ "../views/Demands/Overview.vue"
-              ),
-          },
+          // {
+          //   path: "overview",
+          //   name: "overview",
+          //   component: () =>
+          //     import(
+          //       /* webpackChunkName: "Overview" */ "../views/Demands/Overview.vue"
+          //     ),
+          // },
           {
             path: "my-tasks",
             name: "myTasks",
