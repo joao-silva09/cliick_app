@@ -29,7 +29,7 @@
           class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center"
         >
           <ClipboardDocumentCheckIcon class="h-5 w-5" />
-          <router-link :to="{ name: 'overview' }">Demandas</router-link>
+          <router-link :to="{ name: 'myTasks' }">Demandas</router-link>
         </li>
         <li
           class="hover:text-blue-700 cursor-pointer flex gap-1.5 items-center"
