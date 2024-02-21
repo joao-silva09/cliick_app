@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import cookie from "./cookie";
 
 const api: AxiosInstance = axios.create({
-  baseURL: "https://erp-api.agenciacliick.com.br/default.php/api/",
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
