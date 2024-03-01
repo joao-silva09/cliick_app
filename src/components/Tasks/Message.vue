@@ -7,9 +7,7 @@
       class="shadow-xl p-1.5 rounded-md text-base"
       :class="getMessageTypeClass()"
     >
-      <p>
-        {{ $props.content }}
-      </p>
+      <p v-html="$props.content"></p>
       <span class="text-xs flex justify-end">
         {{ $props.date }}
       </span>

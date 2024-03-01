@@ -71,7 +71,7 @@
     <!-- h-screen rounded-sm p-4 flex flex-1 flex-col justify-end overflow-y-auto -->
     <div>
       <div
-        class="px-3 messages h-[68vh] overflow-y-auto bg-sky-100 rounded p-2"
+        class="px-3 messages h-[68vh] overflow-y-auto bg-sky-50 rounded p-2"
         ref="messageContainer"
       >
         <div
@@ -85,7 +85,7 @@
             :date="new Date(message.created_at).toLocaleString()"
             :sent-by-me="message.username === userName"
             :message-type="message.message_type"
-          />
+            />
           <!-- <RequestApprovalMessage
             v-else-if="message.message_type === 'request_approval'"
             :username="message.username"
