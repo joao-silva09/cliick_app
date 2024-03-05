@@ -24,7 +24,7 @@
             v-model="team.name"
             type="text"
             id="name"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="description">Descrição</label>
@@ -32,7 +32,7 @@
             v-model="team.description"
             type="text"
             id="description"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <!-- @update:modelValue="handleAddUser"
@@ -42,7 +42,7 @@
             v-model="team.users"
             :options="$pinia.state.value.team.usersToAdd"
             label="full_name"
-            class="bg-gray-300 mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             multiple
             id="users"
             appendToBody
@@ -97,15 +97,15 @@ export default {
     openModal() {
       this.isOpen = true;
     },
-    
+
     closeModal() {
       this.isOpen = false;
       teamStore.storeUsersToAdd(this.$pinia.state.value.user.users);
     },
-    
+
     createTeam() {
       useApplicationStore().setIsLoading(true);
-      
+
       const payload = {
         name: this.team.name,
         description: this.team.description,
