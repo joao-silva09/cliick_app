@@ -24,7 +24,7 @@
             v-model="demand.title"
             type="text"
             id="title"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="description">Descrição</label>
@@ -32,7 +32,7 @@
             v-model="demand.description"
             type="text"
             id="description"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="deadline">Prazo</label>
@@ -40,7 +40,7 @@
             v-model="demand.deadline"
             type="date"
             id="deadline"
-            class="bg-gray-300 py-1 px-2 placeholder-gray-500 text-gray-700 font-light rounded-sm focus:outline-none block w-full mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="customer">Cliente</label>
@@ -49,7 +49,7 @@
             :options="$pinia.state.value.customer.customers"
             label="name"
             id="customer"
-            class="bg-gray-300 mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             @update:modelValue="console.log(demand.customer?.id)"
           />
 
@@ -60,10 +60,10 @@
             label="name"
             multiple
             id="teams"
-            class="bg-gray-300 mb-2"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             @update:modelValue="handleAddTeam"
             @remove="handleRemoveTeam"
-            appendToBody 
+            appendToBody
           />
         </div>
 
