@@ -90,13 +90,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import api from "../../services/api";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import { useUserStore } from "../../stores/UserStore";
 import { useApplicationStore } from "../../stores/ApplicationStore";
-import { UserTypes } from "../../types/enums";
+import { UserTypes } from "../../types/Enums";
 
 const userStore = useUserStore();
 export default {
@@ -136,7 +136,6 @@ export default {
 
     createUser() {
       useApplicationStore().setIsLoading(true);
-
       const payload = {
         first_name: this.user.first_name,
         last_name: this.user.last_name,
@@ -200,3 +199,4 @@ export default {
 <style scoped>
 /* Estilos específicos da modal aqui, se necessário */
 </style>
+
