@@ -9,15 +9,7 @@
         Adicionar Cliente
       </button>
     </div>
-    <ul class="grid grid-cols-6 gap-3">
-      <li
-        v-for="customer in $pinia.state.value.customer.customers"
-        :key="customer.id"
-        class="bg-gray-200 rounded shadow-xl my-2 p-4"
-      >
-        {{ customer.name }} - {{ customer.email }} - {{ customer.entry_date }}
-      </li>
-    </ul>
+    <TableCustomers />
 
     <Modal ref="modal" />
   </div>
@@ -27,6 +19,7 @@
 import api from "../services/api";
 import { useCustomerStore } from "../stores/CustomerStore";
 import Modal from "../components/Customers/AddCustomerModal.vue";
+import TableCustomers from "../components/Customers/TableCustomers.vue";
 import { useApplicationStore } from "../stores/ApplicationStore";
 const store = useCustomerStore();
 
@@ -35,6 +28,7 @@ export default {
 
   components: {
     Modal,
+    TableCustomers
   },
 
   data() {
