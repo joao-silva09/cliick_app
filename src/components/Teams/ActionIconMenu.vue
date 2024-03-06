@@ -6,19 +6,19 @@
 
     <!-- Menu suspenso de ações -->
     <div v-if="isMenuOpen" class="action-menu menu-left">
-      <div class="action-menu-item" @click="handleOpenAddUserModal()">
+      <div class="action-menu-item" @click="handleOpenAddUserToTeamModal()">
         Adicionar Usuários
       </div>
       <div class="action-menu-item" @click="performAction('Option 2')">
         Excluír time
       </div>
     </div>
-    <AddUserModal ref="AddUserModal" :team="$props.team" />
+    <AddUserModal ref="AddUserToTeamModal" :team="$props.team" />
   </div>
 </template>
 
 <script lang="ts">
-import AddUserModal from "./AddUserModal.vue";
+import AddUserModal from "./AddUserToTeamModal.vue";
 import { Team } from "../../types/team";
 
 export default {
@@ -49,8 +49,8 @@ export default {
       this.isMenuOpen = false; // Fechar o menu após ação
     },
 
-    handleOpenAddUserModal() {
-      this.$refs.AddUserModal.openModal();
+    handleOpenAddUserToTeamModal() {
+      this.$refs.AddUserToTeamModal.openModal();
     },
   },
 };
