@@ -39,12 +39,6 @@
         <!-- Botão para fechar a modal -->
         <div class="p-4 flex justify-end gap-2">
           <button
-            @click="console.log(users)"
-            class="px-4 py-2 bg-red-500 text-white rounded-md"
-          >
-            testtets
-          </button>
-          <button
             @click="closeModal"
             class="px-4 py-2 bg-red-500 text-white rounded-md"
           >
@@ -128,7 +122,6 @@ export default {
           useApplicationStore().setIsLoading(false);
           this.closeModal();
         });
-
     },
 
     handleAddUser() {
