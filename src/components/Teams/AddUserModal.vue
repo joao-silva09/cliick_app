@@ -49,6 +49,14 @@
             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
+          <label for="phone">Telefone</label>
+          <input
+            v-model="user.phone"
+            type="tel"
+            id="phone"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+
           <label for="password">Senha</label>
           <input
             v-model="user.password"
@@ -111,6 +119,7 @@ export default {
         first_name: "",
         last_name: "",
         email: "",
+        phone: "",
         user_type: "",
         password: "",
         company_id: 1,
@@ -140,6 +149,7 @@ export default {
         first_name: this.user.first_name,
         last_name: this.user.last_name,
         email: this.user.email,
+        phone: this.user.phone,
         user_type: this.user.user_type.value,
         password: this.user.password,
         company_id: 1,
