@@ -34,16 +34,22 @@ export const routes = [
           import(/* webpackChunkName: "customers" */ "../views/Customers.vue"),
       },
       {
-        path: "financial",
-        name: "financial",
-        component: () =>
-          import(/* webpackChunkName: "financial" */ "../views/Financial.vue"),
-      },
-      {
         path: "teams",
         name: "teams",
-        component: () =>
-          import(/* webpackChunkName: "teams" */ "../views/Teams.vue"),
+        children: [
+          {
+            path: "",
+            name: "allTeams",
+            component: () =>
+              import(/* webpackChunkName: "teams" */ "../views/Teams/Teams.vue"),
+          },
+          {
+            path: "users",
+            name: "allUsers",
+            component: () =>
+              import(/* webpackChunkName: "teams" */ "../views/Teams/Users.vue"),
+          },
+        ],
       },
       {
         path: "demands",
@@ -128,6 +134,12 @@ export const routes = [
               ),
           },
         ],
+      },
+      {
+        path: "financial",
+        name: "financial",
+        component: () =>
+          import(/* webpackChunkName: "financial" */ "../views/Financial.vue"),
       },
     ],
   },

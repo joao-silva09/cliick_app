@@ -23,7 +23,7 @@
           class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center"
         >
           <UserGroupIcon class="h-5 w-5" />
-          <router-link :to="{ name: 'teams' }">Times</router-link>
+          <router-link :to="{ name: 'allTeams' }">Times</router-link>
         </li>
         <li
           class="hover:text-blue-700 flex gap-1.5 cursor-pointer items-center"

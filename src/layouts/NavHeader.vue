@@ -3,6 +3,10 @@
     <ul v-if="$route.matched[1].path === '/customers'" class="flex gap-2">
       <HeaderLinks :routeName="'customers'" routeLabel="Todos" />
     </ul>
+    <ul v-if="$route.matched[1].path === '/teams'" class="flex gap-2">
+      <HeaderLinks :routeName="'allTeams'" routeLabel="Times" />
+      <HeaderLinks :routeName="'allUsers'" routeLabel="Usuários" />
+    </ul>
     <ul v-if="$route.matched[1].path === '/demands'" class="flex gap-2">
       <!-- <HeaderLinks :routeName="'overview'" routeLabel="Visão Geral" /> -->
       <HeaderLinks :routeName="'myTasks'" routeLabel="Minhas Tarefas" />
