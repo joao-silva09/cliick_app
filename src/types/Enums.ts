@@ -16,3 +16,10 @@ export enum TaskStatus {
   AwaitingApproval = "Aguardando aprovação",
   Completed = "Concluído",
 }
+
+export enum UserTypes {
+  Owner = "Sócio Proprietário",
+  Leader = "Líder",
+  Employee = "Funcionário",
+  Freelancer = "Freelancer",
+}

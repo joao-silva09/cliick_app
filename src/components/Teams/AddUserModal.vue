@@ -1,6 +1,6 @@
 <!-- Modal.vue -->
 <template>
-  <div v-if="isOpen" class="fixed inset-0 overflow-y-auto z-10">
+  <div v-if="isOpen" class="fixed inset-0 overflow-y-auto">
     <div
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
@@ -18,20 +18,54 @@
       >
         <!-- Conteúdo interno da modal -->
         <div class="bg-white p-4">
-          <h2 class="text-2xl font-semibold mb-4">
-            Adicionar Usuários Ao Time {{ $props.team.name }}
-          </h2>
+          <h2 class="text-2xl font-semibold mb-4">Adicionar novo usuário</h2>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="first_name">Nome</label>
+              <input
+                v-model="user.first_name"
+                type="text"
+                id="first_name"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
 
-          <label for="users">Usuários</label>
-          <v-select
-            v-model="users"
-            :options="$pinia.state.value.team.usersToAdd"
-            label="full_name"
+            <div>
+              <label for="last_name">Sobrenome</label>
+              <input
+                v-model="user.last_name"
+                type="text"
+                id="last_name"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <label for="email">Email</label>
+          <input
+            v-model="user.email"
+            type="email"
+            id="email"
             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            multiple
-            id="users"
-            @update:modelValue="handleAddUser"
-            @remove="handleRemoveUser"
+          />
+
+          <label for="password">Senha</label>
+          <input
+            v-model="user.password"
+            type="text"
+            id="password"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+
+          <!-- @update:modelValue="handleAddUser"
+            @remove="handleRemoveUser" -->
+          <label for="users">Cargo</label>
+          <v-select
+            v-model="user.user_type"
+            :options="userTypesOptions"
+            label="label"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            id="user_type"
             appendToBody
           />
         </div>
@@ -39,19 +73,13 @@
         <!-- Botão para fechar a modal -->
         <div class="p-4 flex justify-end gap-2">
           <button
-            @click="console.log(users)"
-            class="px-4 py-2 bg-red-500 text-white rounded-md"
-          >
-            testtets
-          </button>
-          <button
             @click="closeModal"
             class="px-4 py-2 bg-red-500 text-white rounded-md"
           >
             Fechar
           </button>
           <button
-            @click="createTeam"
+            @click="createUser"
             class="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Salvar
@@ -66,38 +94,39 @@
 import api from "../../services/api";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import { useTeamStore } from "../../stores/TeamStore";
+import { useUserStore } from "../../stores/UserStore";
 import { useApplicationStore } from "../../stores/ApplicationStore";
-import { Team } from "../../types/team";
+import { UserTypes } from "../../types/enums";
 
-const teamStore = useTeamStore();
+const userStore = useUserStore();
 export default {
   name: "AddUserModal",
-
   components: {
     vSelect,
   },
-
   data() {
     return {
       isOpen: false,
-      users: [],
+      user: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        user_type: "",
+        password: "",
+        company_id: 1,
+      },
+      userTypesOptions: Object.entries(UserTypes).map(
+        ([key, value]) => ({
+          label: value,
+          value: key,
+        })
+      ),
     };
   },
-
-  props: {
-    team: {} as any,
-  },
-
+  
   methods: {
     openModal() {
       this.isOpen = true;
-      teamStore.storeUsersToAdd(
-        this.compararArraysDeObjetos(
-          this.$pinia.state.value.team.usersToAdd,
-          this.$props.team.users
-        )
-      );
     },
 
     closeModal() {
@@ -105,30 +134,32 @@ export default {
       teamStore.storeUsersToAdd(this.$pinia.state.value.user.users);
     },
 
-    createTeam() {
+    createUser() {
       useApplicationStore().setIsLoading(true);
 
       const payload = {
-        users_ids: this.users.map((user) => user.id),
+        first_name: this.user.first_name,
+        last_name: this.user.last_name,
+        email: this.user.email,
+        user_type: this.user.user_type.value,
+        password: this.user.password,
+        company_id: 1,
       };
 
-      console.log(payload.users_ids);
-
       api
-        .post(`teams/${this.$props.team.id}/add-users`, payload)
+        .post("register", payload)
         .then((response) => {
-          const currentTeams = teamStore.teams;
-          currentTeams[this.$props.team.id].users!.push(
-            response.data.data.users
-          );
-          teamStore.storeTeams(currentTeams);
+          const currentUsers = userStore.usersAll;
+          currentUsers?.push(response.data.data);
+          userStore.storeUsersAll(currentUsers);
         })
-        .catch((e) => console.log(e))
+        .catch((e) => alert(e))
         .finally(() => {
+          // teamStore.storeUsersAll(this.$pinia.state.value.user.users);
           useApplicationStore().setIsLoading(false);
-          this.closeModal();
         });
 
+      this.closeModal();
     },
 
     handleAddUser() {
@@ -140,7 +171,7 @@ export default {
     },
 
     handleRemoveUser(removedTeam) {
-      // Adicionar o user removido de volta à lista de opções gerenciada pelo Pinia
+      // Adicionar o time removido de volta à lista de opções gerenciada pelo Pinia
       this.$pinia.state.value.team.usersToAdd.push(removedTeam);
     },
 
@@ -161,22 +192,6 @@ export default {
       // Implemente a lógica de comparação de objetos conforme necessário
       // Aqui é um exemplo simples, você pode ajustar conforme seus requisitos
       return objeto1.id === objeto2.id;
-    },
-  },
-
-  watch: {
-    users: function (newUsers, oldUsers) {
-      // Identifica o usuário removido
-      const removedUser = oldUsers.find((user) => !newUsers.includes(user));
-
-      if (removedUser) {
-        // Adiciona o usuário removido de volta à lista de opções gerenciada pelo Pinia
-        this.$pinia.state.value.team.usersToAdd.push(removedUser);
-        // Ordena a lista alfabeticamente
-        this.$pinia.state.value.team.usersToAdd.sort((a, b) =>
-          a.full_name.localeCompare(b.full_name)
-        );
-      }
     },
   },
 };
