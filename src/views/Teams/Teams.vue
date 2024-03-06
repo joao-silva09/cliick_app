@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import api from "../services/api";
-import { useTeamStore } from "../stores/TeamStore";
-import Modal from "../components/Teams/AddTeamModal.vue";
-import ActionIconMenu from "../components/Teams/ActionIconMenu.vue";
-import { useApplicationStore } from "../stores/ApplicationStore";
-import { useUserStore } from "../stores/UserStore";
+import api from "../../services/api";
+import { useTeamStore } from "../../stores/TeamStore";
+import Modal from "../../components/Teams/AddTeamModal.vue";
+import ActionIconMenu from "../../components/Teams/ActionIconMenu.vue";
+import { useApplicationStore } from "../../stores/ApplicationStore";
+import { useUserStore } from "../../stores/UserStore";
 
 const teamStore = useTeamStore();
 export default {
