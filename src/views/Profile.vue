@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import UpdateProfilePhotoModal from "../components/Profile/UpdateProfilePhotoModal.vue";
 
 export default {
