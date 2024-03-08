@@ -14,18 +14,45 @@
       <li
         v-for="(user, index) in $pinia.state.value.user.usersAll"
         :key="index"
-        class="bg-[#1B4B73] rounded my-2 p-4 text-white"
+        class="rounded border border-gray-100 shadow-md my-2 text-center flex justify-between flex-col"
       >
-        <div class="flex justify-between">
-          <h3 class="text-lg mb-3">
-            {{ user.full_name }}
-          </h3>
-          <!-- <ActionIconMenu :team="user" /> -->
+        <div class="flex justify-center pt-3">
+          <img
+            v-if="user.profile_photo"
+            :src="`http://localhost:8000/storage/${user.profile_photo}`"
+            alt="Profile Photo"
+            class="w-[40%] rounded-full mb-2"
+          />
+          <img
+            v-else
+            src="../../assets/img/default-profile-photo.png"
+            alt="Profile Photo"
+            class="w-[40%] rounded-full mb-2"
+          />
         </div>
+        <h3 class="text-sm mb-8 font-medium">
+          {{ user.full_name }}
+        </h3>
+        <!-- <ActionIconMenu :team="user" /> -->
+<!-- 
         <h4 class="text-sm mb-3">
           {{ user.user_type }}
-        </h4>
-        <!-- <p v-for="user in team.users">{{ user.full_name }}</p> -->
+        </h4> -->
+
+        <div class="grid grid-cols-2">
+          <a
+            :href="`https://wa.me/${user.phone}`"
+            target="_blank "
+            class="border border-gray-200 cursor-pointer p-2 hover:bg-gray-100 flex justify-center"
+            ><img src="../../assets/icons/whatsapp.svg" alt="" class="w-6"
+          /></a>
+          <a
+            :href="`mailto:${user.email}`"
+            target="_blank"
+            class="border border-gray-200 cursor-pointer p-1 hover:bg-gray-100 flex justify-center"
+            ><EnvelopeIcon class="w-6"
+          /></a>
+        </div>
       </li>
     </ul>
 
@@ -35,37 +62,39 @@
 
 <script>
 import api from "../../services/api";
-import { useTeamStore } from "../../stores/TeamStore";
 import Modal from "../../components/Teams/AddUserModal.vue";
-import ActionIconMenu from "../../components/Teams/ActionIconMenu.vue";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 import { useUserStore } from "../../stores/UserStore";
+import { EnvelopeIcon } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 export default {
   name: "Users",
 
   components: {
-    ActionIconMenu,
     Modal,
+    EnvelopeIcon,
   },
 
   data() {
-    return {};
-  },
-
-  created() {
-    this.getUsers();
+    return {
+      // photoUrl: null,
+    };
   },
 
   methods: {
     getUsers() {
       userStore.getUsersAll();
+      // this.photoUrl = ;
     },
 
     openModal() {
       this.$refs.modal.openModal();
     },
+  },
+
+  mounted() {
+    this.getUsers();
   },
 };
 </script>
