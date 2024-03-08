@@ -12,8 +12,7 @@
       />
       <img
         v-else
-        src="../../assets/img/default-profile-photo.png"
-        alt="Profile Photo"
+        src="../assets/img/default-profile-photo.png"
         class="w-11 rounded-full mb-2 cursor-pointer"
       />
     </router-link>

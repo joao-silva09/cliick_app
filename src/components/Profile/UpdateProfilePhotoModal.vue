@@ -21,7 +21,6 @@
           <h2 class="text-2xl font-semibold mb-4">Atualizar foto do perfil</h2>
           <div>
             <form @submit.prevent="updateProfilePhoto">
-              <label for="profilePhoto">Escolha uma nova foto de perfil:</label>
               <input
                 type="file"
                 id="profilePhoto"
