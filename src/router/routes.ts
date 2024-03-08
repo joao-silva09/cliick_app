@@ -28,6 +28,12 @@ export const routes = [
           import(/* webpackChunkName: "home" */ "../views/Home.vue"),
       },
       {
+        path: "profile",
+        name: "profile",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/Profile.vue"),
+      },
+      {
         path: "customers",
         name: "customers",
         component: () =>
