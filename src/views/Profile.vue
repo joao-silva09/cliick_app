@@ -3,7 +3,7 @@
     <div class="flex justify-center gap-8 flex-col items-center w-100">
       <img
         v-if="$pinia.state.value.user.user.profile_photo"
-        :src="`${import.meta.env.VITE_API_BASE_URL}/storage/${$pinia.state.value.user.user.profile_photo}`"
+        :src="`https://erp-api.agenciacliick.com.br/default.php/storage/${$pinia.state.value.user.user.profile_photo}`"
         alt="Profile Photo"
         class="w-32 h-32 rounded-full mb-2 cursor-pointer"
         @click="openUpdateProfilePhotoModal()"
@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import UpdateProfilePhotoModal from "../components/Profile/UpdateProfilePhotoModal.vue";
 
 export default {
