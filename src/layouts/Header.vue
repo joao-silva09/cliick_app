@@ -6,7 +6,7 @@
     <router-link :to="{ name: 'profile' }">
       <img
         v-if="$pinia.state.value.user.user.profile_photo"
-        :src="`http://localhost:8000/storage/${$pinia.state.value.user.user.profile_photo}`"
+        :src="`${import.meta.env.VITE_API_BASE_URL}/storage/${$pinia.state.value.user.user.profile_photo}`"
         alt="Profile Photo"
         class="w-11 rounded-full mb-2 cursor-pointer"
       />

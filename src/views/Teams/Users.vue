@@ -19,7 +19,7 @@
         <div class="flex justify-center pt-3">
           <img
             v-if="user.profile_photo"
-            :src="`http://localhost:8000/storage/${user.profile_photo}`"
+            :src="`${import.meta.env.VITE_API_BASE_URL}/storage/${user.profile_photo}`"
             alt="Profile Photo"
             class="w-[40%] rounded-full mb-2"
           />
