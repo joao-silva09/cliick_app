@@ -19,6 +19,10 @@ export const useUserStore = defineStore("user", {
       this.usersAll = users;
     },
 
+    storeProfilePhoto(photo) {
+      this.user.profile_photo = photo.replace("/storage/", "");
+    },
+
     getUsersAll() {
       useApplicationStore().setIsLoading(true);
       api
