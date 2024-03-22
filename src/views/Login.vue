@@ -43,13 +43,6 @@
               class="block text-sm font-medium leading-6 text-gray-900"
               >Senha</label
             >
-            <div class="text-sm">
-              <a
-                href="#"
-                class="font-semibold text-[#148] hover:text-indigo-500"
-                >Forgot password?</a
-              >
-            </div>
           </div>
           <div class="mt-2">
             <input
