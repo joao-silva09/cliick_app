@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-xl mb-8">Demandas Por Cliente</h2>
+    <h2 class="text-xl mb-8">Tarefas Por Cliente</h2>
     <!-- <button
         @click="openModal()"
         class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"
@@ -11,7 +11,7 @@
       <li
         class="border border-gray-600 p-4 hover:bg-sky-700 cursor-pointer"
         v-for="customer in $pinia.state.value.customer.customers"
-        @click.stop.prevent="getDemandsByCustomer(customer.id)"
+        @click.stop.prevent="getTasksByCustomer(customer.id)"
       >
         <div>
           {{ customer.name }}
@@ -25,13 +25,13 @@
 <script>
 import api from "../../services/api";
 import { useCustomerStore } from "../../stores/CustomerStore";
-import { useDemandStore } from "../../stores/DemandStore";
-// import Modal from "../../components/Demands/AddDemandModal.vue";
+import { useTaskStore } from "../../stores/TaskStore";
+// import Modal from "../../components/Tasks/AddTaskModal.vue";
 import { useTeamStore } from "../../stores/TeamStore";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 
 const customerStore = useCustomerStore();
-const demandStore = useDemandStore();
+const taskStore = useTaskStore();
 export default {
   name: "ForCustomer",
   components: {
@@ -47,15 +47,15 @@ export default {
   mounted() {
     customerStore.getCustomers();
     useTeamStore().getTeams();
-    demandStore.clearTeamsAndCustomer();
+    taskStore.clearTeamsAndCustomer();
   },
   methods: {
-    getDemandsByCustomer(customerId) {
+    getTasksByCustomer(customerId) {
       useApplicationStore().setIsLoading(true);
       api
-        .get(`demands/customer/${customerId}`)
+        .get(`tasks/customer/${customerId}`)
         .then((response) => {
-          demandStore.storeDemandsByCustomer(response.data.data);
+          taskStore.storeTasksByCustomer(response.data.data);
         })
         .catch((e) => {
           alert(e);
@@ -63,7 +63,7 @@ export default {
         })
         .finally(() => {
           this.$router.push({
-            name: "demandsList",
+            name: "tasksList",
             params: {
               id: customerId,
             },
