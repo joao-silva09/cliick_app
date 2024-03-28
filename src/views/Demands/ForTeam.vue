@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-xl mb-8">Demandas Por Time</h2>
+    <h2 class="text-xl mb-8">Tarefas Por Time</h2>
 
     <div class="grid grid-cols-5 gap-2 h-32">
       <div v-for="team in $pinia.state.value.team.teams" class="flex">
@@ -15,13 +15,13 @@
 
 <script>
 import { useTeamStore } from "../../stores/TeamStore";
-import { useDemandStore } from "../../stores/DemandStore";
+import { useTaskStore } from "../../stores/TaskStore";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import CardTeam from "../../components/Demands/CardTeam.vue";
 import api from "../../services/api";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 
-const demandStore = useDemandStore();
+const taskStore = useTaskStore();
 const teamStore = useTeamStore();
 export default {
   name: "ForTeam",
@@ -37,20 +37,20 @@ export default {
   mounted() {
     teamStore.getTeams();
     useCustomerStore().getCustomers();
-    demandStore.clearTeamsAndCustomer();
+    taskStore.clearTeamsAndCustomer();
     // teams = teamStore.getAllTeams()
   },
   methods: {
-    getDemandsByTeam(teamId) {
+    getTasksByTeam(teamId) {
       useApplicationStore().setIsLoading(true);
       api
-        .get(`demands/team/${teamId}`)
+        .get(`tasks/team/${teamId}`)
         .then((response) => {
-          const demandsToAdd = response.data.data.demands.map((demand) => ({
-            ...demand,
+          const tasksToAdd = response.data.data.tasks.map((task) => ({
+            ...task,
             open: false,
           }));
-          demandStore.storeDemandsByTeam(demandsToAdd, response.data.data);
+          taskStore.storeTasksByTeam(tasksToAdd, response.data.data);
         })
         .catch((e) => {
           alert(e);
@@ -58,7 +58,7 @@ export default {
         })
         .finally(() => {
           this.$router.push({
-            name: "demandsList",
+            name: "tasksList",
             params: {
               id: teamId,
             },
