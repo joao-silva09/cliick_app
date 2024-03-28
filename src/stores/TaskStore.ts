@@ -2,11 +2,15 @@ import { defineStore } from "pinia";
 import api from "../services/api";
 import { Task } from "../types/Task";
 import { useApplicationStore } from "./ApplicationStore";
+import { Customer } from "../types/Customer";
+import { Team } from "../types/team";
 
 export const useTaskStore = defineStore("task", {
   state: () => ({
     tasks: [] as Task[],
     task: {} as Task,
+    customerWithTasks: {} as Customer,
+    teamWithTasks: {} as Team
   }),
   actions: {
     storeTasks(tasks) {
@@ -64,6 +68,21 @@ export const useTaskStore = defineStore("task", {
           });
           useApplicationStore().setIsLoading(false);
         });
+    },
+
+    storeTasksByCustomer(customer: Customer) {
+      this.tasks = customer.tasks!;
+      this.customerWithTasks = customer;
+    },
+
+    storeTasksByTeam(tasks, team) {
+      this.tasks = tasks;
+      this.teamWithTasks = team;
+    },
+    
+    clearTeamsAndCustomer() {
+      this.customerWithTasks = {} as Customer;
+      this.teamWithTasks = {} as Team;
     },
   },
 });
