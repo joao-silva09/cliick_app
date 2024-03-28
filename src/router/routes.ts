@@ -47,19 +47,23 @@ export const routes = [
             path: "",
             name: "allTeams",
             component: () =>
-              import(/* webpackChunkName: "teams" */ "../views/Teams/Teams.vue"),
+              import(
+                /* webpackChunkName: "teams" */ "../views/Teams/Teams.vue"
+              ),
           },
           {
             path: "users",
             name: "allUsers",
             component: () =>
-              import(/* webpackChunkName: "teams" */ "../views/Teams/Users.vue"),
+              import(
+                /* webpackChunkName: "teams" */ "../views/Teams/Users.vue"
+              ),
           },
         ],
       },
       {
-        path: "demands",
-        name: "demands",
+        path: "tasks",
+        name: "tasks",
         children: [
           {
             path: "",
@@ -95,7 +99,7 @@ export const routes = [
           },
           {
             path: "for-team",
-            name: "demandsForTeam",
+            name: "tasksForTeam",
             component: () =>
               import(
                 /* webpackChunkName: "forTeam" */ "../views/Demands/ForTeam.vue"
@@ -103,18 +107,26 @@ export const routes = [
           },
           {
             path: ":id",
-            name: "demandsList",
+            name: "tasksList",
             component: () =>
               import(
-                /* webpackChunkName: "forTeam" */ "../views/Demands/DemandsList.vue"
+                /* webpackChunkName: "tasksList" */ "../views/Demands/TasksList.vue"
               ),
           },
           {
             path: "for-customer",
-            name: "demandsForCustomer",
+            name: "tasksForCustomer",
             component: () =>
               import(
                 /* webpackChunkName: "forTeam" */ "../views/Demands/ForCustomer.vue"
+              ),
+          },
+          {
+            path: ":task",
+            name: "task",
+            component: () =>
+              import(
+                /* webpackChunkName: "forTeam" */ "../views/Tasks/Task.vue"
               ),
           },
           // {
@@ -125,20 +137,6 @@ export const routes = [
           //       /* webpackChunkName: "forTeam" */ "../views/Demands/ForCustomer.vue"
           //     ),
           // },
-        ],
-      },
-      {
-        path: "task",
-        name: "tasks",
-        children: [
-          {
-            path: ":task",
-            name: "task",
-            component: () =>
-              import(
-                /* webpackChunkName: "forTeam" */ "../views/Tasks/Task.vue"
-              ),
-          },
         ],
       },
       {
