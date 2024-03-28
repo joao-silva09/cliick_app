@@ -1,15 +1,15 @@
 <template>
-  <div class="">
+  <div>
     <div class="flex justify-between mb-4">
-      <h1 class="text-center font-bold text-2xl">Demandas de {{ $pinia.state.value.demand.customerWithDemands.name ?? $pinia.state.value.demand.teamWithDemands.name }}</h1>
+      <h1 class="text-center font-bold text-2xl">Tarefas de {{ $pinia.state.value.demand.customerWithDemands.name ?? $pinia.state.value.demand.teamWithDemands.name }}</h1>
       <button
         @click="openModal()"
         class="rounded px-3 py-2 bg-blue-600 text-white hover:bg-blue-800 hover:transition-all"
       >
-        Adicionar demanda
+        Adicionar tarefa
       </button>
     </div>
-    <DemandAccordion v-if="$pinia.state.value.demand.demands" />
+    <DemandAccordion v-if="$pinia.state.value.task.tasks" />
     <img
       v-else
       src="../../assets/img/spinner.svg"
@@ -23,13 +23,14 @@
 <script>
 import CardTeam from "../../components/Demands/CardTeam.vue";
 import Modal from "../../components/Demands/AddDemandModal.vue";
-import { useDemandStore } from "../../stores/DemandStore";
+import { useTaskStore } from "../../stores/TaskStore";
 import DemandAccordion from "../../components/Demands/DemandAccordion.vue";
 import { TaskStatus } from "../../types/Enums";
+import { useTaskStore } from "../../stores/TaskStore";
 
-const demandStore = useDemandStore();
+const taskStore = useTaskStore();
 export default {
-  name: "DemandsList",
+  name: "TasksList",
   components: {
     Modal,
     CardTeam,
