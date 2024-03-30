@@ -28,7 +28,7 @@
         <h5><b>Status: </b>{{ $pinia.state.value.task.task.status }}</h5>
         <p>
           <b>Cliente: </b
-          >{{ $pinia.state.value.task.task.demand.customer.name }}
+          >{{ $pinia.state.value.task.task.customer.name }}
         </p>
         <p>
           <b>Prazo: </b>
@@ -49,7 +49,7 @@
         <div class="w-full border border-blue-700 p-3 rounded shadow-xl">
           <h2 class="font-bold">Times Envolvidos:</h2>
           <div
-            v-for="team in $pinia.state.value.task.task.demand.teams"
+            v-for="team in $pinia.state.value.task.task.teams"
             :key="team.id"
           >
             {{ team.name }}
