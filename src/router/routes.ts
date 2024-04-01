@@ -142,8 +142,16 @@ export const routes = [
       {
         path: "financial",
         name: "financial",
-        component: () =>
-          import(/* webpackChunkName: "financial" */ "../views/Financial.vue"),
+        children: [
+          {
+            path: "expenses",
+            name: "expenses",
+            component: () =>
+              import(
+                /* webpackChunkName: "expenses" */ "../views/Financial/Expenses.vue"
+              ),
+          },
+        ],
       },
     ],
   },
