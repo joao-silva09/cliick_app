@@ -46,9 +46,10 @@
 
 <script>
 import CardTeam from "../../components/Demands/CardTeam.vue";
-import AddTaskModal from "./components/Tasks/AddTaskModal";
+import AddTaskModal from "../../components/Tasks/AddTaskModal.vue";
 import { TaskStatus } from "../../types/Enums";
 import { useTaskStore } from "../../stores/TaskStore";
+import api from "../../services/api";
 
 const taskStore = useTaskStore();
 export default {
@@ -85,6 +86,10 @@ export default {
       } else {
         return "bg-red-400";
       }
+    },
+
+    getTask(taskId) {
+      taskStore.getTask(taskId, this.$router);
     },
   },
 };
