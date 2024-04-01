@@ -12,7 +12,7 @@
         @click.stop.prevent="getTask(task.id)"
       >
         <div>
-          [{{ task.demand?.customer?.name }}]
+          [{{ task.customer?.name }}]
           {{ task.title }}
         </div>
         <div class="flex gap-3">
