@@ -107,6 +107,7 @@
       </div>
       <!-- disabled="{{ $pinia.state.value.task.task.status === 'Concluído' }}" -->
       <input
+        v-if="$pinia.state.value.task.task.status === 'Pendente'"
         v-model="contentMessage"
         type="text"
         placeholder="Digite sua mensagem..."
