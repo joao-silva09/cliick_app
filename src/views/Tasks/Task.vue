@@ -26,10 +26,7 @@
           <b>Descrição: </b>{{ $pinia.state.value.task.task.description }}
         </p>
         <h5><b>Status: </b>{{ $pinia.state.value.task.task.status }}</h5>
-        <p>
-          <b>Cliente: </b
-          >{{ $pinia.state.value.task.task.customer.name }}
-        </p>
+        <p><b>Cliente: </b>{{ $pinia.state.value.task.task.customer.name }}</p>
         <p>
           <b>Prazo: </b>
           {{
@@ -61,8 +58,21 @@
           <div
             v-for="user in $pinia.state.value.task.task.users"
             :key="user.id"
+            class="flex"
           >
-            {{ user.first_name + " " + user.last_name }}
+            <img
+              v-if="user.profile_photo"
+              :src="`https://erp-api.agenciacliick.com.br/default.php/storage/${user.profile_photo}`"
+            />
+            <img
+              v-else
+              src="../assets/img/default-profile-photo.png"
+              alt="Profile Photo"
+              class="w-32 h-32 rounded-full mb-2 cursor-pointer"
+            />
+            <span>
+              {{ user.first_name + " " + user.last_name }}
+            </span>
           </div>
         </div>
       </div>
@@ -85,7 +95,7 @@
             :date="new Date(message.created_at).toLocaleString()"
             :sent-by-me="message.username === userName"
             :message-type="message.message_type"
-            />
+          />
           <!-- <RequestApprovalMessage
             v-else-if="message.message_type === 'request_approval'"
             :username="message.username"
