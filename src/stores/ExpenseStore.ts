@@ -1,22 +1,22 @@
 import { defineStore } from "pinia";
 import api from "../services/api";
-import { Customer } from "../types/Customer";
 import { useApplicationStore } from "./ApplicationStore";
+import { Expense } from "../types/Expense";
 
-export const useCustomerStore = defineStore("customer", {
+export const useExpenseStore = defineStore("expense", {
   state: () => ({
-    customers: [] as Customer[],
+    expenses: [] as Expense[],
   }),
   actions: {
-    storeCustomers(customers) {
-      this.customers = customers;
+    storeExpenses(esxpenses) {
+      this.expenses = esxpenses;
     },
-    getCustomers() {
+    getExpenses() {
       useApplicationStore().setIsLoading(true);
       api
-        .get("customers")
+        .get("expenses")
         .then((response) => {
-          this.storeCustomers(response.data.data);
+          this.storeExpenses(response.data.data);
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));
