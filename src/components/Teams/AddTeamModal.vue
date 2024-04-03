@@ -37,7 +37,7 @@
 
           <!-- @update:modelValue="handleAddUser"
             @remove="handleRemoveUser" -->
-          <label for="users">Usuários</label>
+          <label for="users">Membros</label>
           <v-select
             v-model="team.users"
             :options="$pinia.state.value.team.usersToAdd"
