@@ -15,9 +15,9 @@
       <HeaderLinks :routeName="'tasksForCustomer'" routeLabel="Por Cliente" />
     </ul>
     <ul v-if="$route.matched[1].path === '/financial'" class="flex gap-2">
-      <HeaderLinks :routeName="'financial'" routeLabel="Geral" />
+      <HeaderLinks :routeName="'financialOverview'" routeLabel="Geral" />
       <HeaderLinks :routeName="'expenses'" routeLabel="Despesas" />
-      <HeaderLinks :routeName="'financial'" routeLabel="Dívidas" />
+      <HeaderLinks :routeName="'debts'" routeLabel="Dívidas" />
     </ul>
     <!-- <div v-else @click.stop.prevent="back()">  
 <router-link :to="this.$router.back()">Voltar</router-link> 
