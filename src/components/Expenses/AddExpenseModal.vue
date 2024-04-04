@@ -35,21 +35,27 @@
             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
-          <label for="value">Valor</label>
-          <input
-            v-model="expense.value"
-            type="number"
-            id="value"
-            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
+          <div class="flex justify-between">
+            <label for="value" class="w-[48%]"
+              >Valor
+              <input
+                v-model="expense.value"
+                type="number"
+                id="value"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </label>
 
-          <label for="deadline">Data do Pagamento</label>
-          <input
-            v-model="expense.paid_at"
-            type="date"
-            id="deadline"
-            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
+            <label for="deadline" class="w-[48%]"
+              >Data do Pagamento
+              <input
+                v-model="expense.paid_at"
+                type="date"
+                id="deadline"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </label>
+          </div>
         </div>
 
         <!-- Botão para fechar a modal -->
@@ -79,13 +85,13 @@ import { useApplicationStore } from "../../stores/ApplicationStore";
 import { useExpenseStore } from "../../stores/ExpenseStore";
 import "vue-select/dist/vue-select.css";
 import { Expense } from "../../types/Expense";
+import { useCompanyStore } from "../../stores/CompanyStore";
 
 const expenseStore = useExpenseStore();
 export default {
   name: "AddExpenseModal",
   components: {},
   data() {
-
     return {
       isOpen: false,
       expense: {
@@ -114,15 +120,18 @@ export default {
         description: this.expense.description,
         value: this.expense.value,
         paid_at: this.expense.paid_at,
-        company_id: 1,
+        company_id: useCompanyStore().company.id,
       };
 
       api
         .post("expenses", payload)
         .then((response) => {
           const currentExpenses = expenseStore.expenses;
-          currentExpenses?.push(response.data.data);
-          expenseStore.storeExpenses(currentExpenses);
+          currentExpenses?.push(response.data.expense);
+          expenseStore.storeExpenses(
+            currentExpenses,
+            response.data.totalExpense
+          );
         })
         .catch((e) => alert(e))
         .finally(() => {
