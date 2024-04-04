@@ -6,7 +6,7 @@
       <div v-for="team in $pinia.state.value.team.teams" class="flex">
         <CardTeam
           :team="team"
-          @click.stop.prevent="getDemandsByTeam(team.id)"
+          @click.stop.prevent="getTasksByTeam(team.id)"
         />
       </div>
     </div>
