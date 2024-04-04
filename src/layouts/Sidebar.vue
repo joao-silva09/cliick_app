@@ -35,7 +35,7 @@
           class="hover:text-blue-700 cursor-pointer flex gap-1.5 items-center"
         >
           <CurrencyDollarIcon class="h-5 w-5" />
-          <router-link :to="{ name: 'financial' }">Financeiro</router-link>
+          <router-link :to="{ name: 'financialOverview' }">Financeiro</router-link>
         </li>
         <li class="hover:text-blue-700 cursor-pointer flex gap-1.5 items-center">
           <LogoutIcon class="h-5 w-5" />
