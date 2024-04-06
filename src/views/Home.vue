@@ -1,99 +1,109 @@
 <template>
-  <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
-    <!-- <div class="flex items-center justify-between mb-8">
-      <div class="text-gray-500 font-medium">Lista de tarefas</div>
+  <div class="w-full">
+    <h2 class="text-xl mb-8">Página inicial</h2>
+
+    <div class="flex">
+      <div class="rounded shadow-md w-[30%] p-3">
+        <h4 class="mb-4">Mensagens enviadas</h4>
+        <ul v-for="(message, index) in $pinia.state.value.message.messages">
+          <li
+            :key="index"
+            class="border-b p-2 text-ellipsis overflow-hidden cursor-pointer hover:bg-gray-200"
+            @click="getTask(message.task.id)"
+          >
+            <p class="text-[12px]">
+              {{ new Date(message.created_at).toLocaleDateString() }}
+            </p>
+            <p class="text-sm">{{ message.task.title }}</p>
+            <div>
+              <p v-html="message.message" class="h-4"></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tasks -->
+      <div class="rounded shadow-md w-[30%] p-3">
+        <h4 class="mb-4">Tarefas em aberto</h4>
+        <DoughnutChart
+          v-if="!isLoading"
+          :labels="['Pendente', 'Em Atraso']"
+          :colors="['yellow', 'red']"
+          :data="[
+            $pinia.state.value.task.pendingTasks,
+            $pinia.state.value.task.overdueTasks,
+          ]"
+        />
+      </div>
     </div>
-
-    <form
-      @submit.stop.prevent="createTodo"
-      class="flex items-center px-4 bg-gray-300 h-15 rounded-sm mb-3"
-    >
-      <input
-        v-model="newTodo"
-        type="text"
-        placeholder="Digite o nome da sua lista..."
-        class="bg-gray-300 placeholder-gray-500 text-gray-700 font-light focus:outline-none block w-full"
-      />
-
-      <button class="text-blue-700 text-xs font-semibold focus:outline-none">
-        ADICIONAR
-      </button>
-    </form>
-
-    <div v-if="spinner.get_todos" class="text-center">
-      <img src="../assets/img/spinner.svg" alt="" class="w-5 h-5 mr-2" />
-    </div> -->
-
   </div>
 </template>
 
 <script>
 import api from "../services/api";
+import { useApplicationStore } from "../stores/ApplicationStore";
+import { useMessageStore } from "../stores/MessageStore";
+import { useTaskStore } from "../stores/TaskStore";
+import DoughnutChart from "../components/Charts/DoughnutChart.vue";
 
+const taskStore = useTaskStore();
+const messageStore = useMessageStore();
 export default {
   name: "Home",
 
   components: {
+    DoughnutChart,
   },
 
   data() {
     return {
-      newTodo: "",
-      todos: [],
-      spinner: {
-        get_todos: false,
-      },
+      isLoading: false,
+      pendingTasks: this.$pinia.state.value.task.pendingTasks,
+      overdueTasks: this.$pinia.state.value.task.overdueTasks,
     };
   },
-
-  // created() {
-  //   this.getTodos();
-  // },
+  created() {
+    this.getSentMessages();
+    this.getMyTasks();
+  },
 
   methods: {
-    getTodos() {
-      this.spinner.get_todos = true;
+    getSentMessages() {
+      useApplicationStore().setIsLoading(true);
       api
-        .get("v1/todos")
+        .get("messages/user")
         .then((response) => {
-          this.todos = response.data.data.map((object) => ({
-            ...object,
-            state: 'show'
-          }));
-          todoStore.storeTodo(response.data.data);
+          const messages = response.data.data;
+          messageStore.storeMessages(messages.slice(0, 5));
         })
+        .catch((e) => alert(e))
         .finally(() => {
-          this.spinner.get_todos = false;
+          useApplicationStore().setIsLoading(false);
         });
     },
-
-    createTodo() {
-      if (!this.newTodo) {
-        return;
-      }
-      const payload = {
-        label: this.newTodo,
-      };
-
-      api.post("v1/todos", payload).then((response) => {
-        this.todos.unshift(response.data.data);
-        this.newTodo = "";
-      });
+    getMyTasks() {
+      this.isLoading = true;
+      api
+        .get(`tasks`)
+        .then((response) => {
+          taskStore.storeTasks(response.data.data);
+          taskStore.storePendingTasks(
+            response.data.data.filter(
+              (task) => new Date(task.deadline) > new Date()
+            ).length
+          );
+          taskStore.storeOverdueTasks(
+            response.data.data.filter(
+              (task) => new Date(task.deadline) <= new Date()
+            ).length
+          );
+          this.isLoading = false;
+        })
+        .catch((e) => alert(e));
     },
 
-    updateTodo(todo) {
-      const payload = {
-        label: todo.label,
-      };
-
-      api.put(`v1/todos/${todo.id}`, payload);
-    },
-
-    destroyTodo(todo) {
-      api.delete(`v1/todos/${todo.id}`).then(() => {
-        const idx = this.todos.findIndex((object) => object.id === todo.id);
-        this.todos.splice(idx, 1);
-      });
+    getTask(taskId) {
+      taskStore.getTask(taskId, this.$router);
     },
   },
 };
