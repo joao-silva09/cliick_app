@@ -40,7 +40,7 @@
       alt=""
       class="w-5 h-5 mr-2"
     />
-    <Modal ref="modal" />
+    <AddTaskModal ref="modal" />
   </div>
 </template>
 
@@ -49,6 +49,8 @@ import CardTeam from "../../components/Demands/CardTeam.vue";
 import AddTaskModal from "../../components/Tasks/AddTaskModal.vue";
 import { TaskStatus } from "../../types/Enums";
 import { useTaskStore } from "../../stores/TaskStore";
+import { useUserStore } from "../../stores/UserStore";
+import { useApplicationStore } from "../../stores/ApplicationStore";
 import api from "../../services/api";
 
 const taskStore = useTaskStore();
@@ -67,12 +69,24 @@ export default {
     };
   },
   created() {
-    // this.getDemandsByTeam();
+    this.getUsers()
   },
 
   methods: {
     openModal() {
       this.$refs.modal.openModal();
+    },
+
+    getUsers() {
+      useApplicationStore().setIsLoading(true);
+      api
+        .get("me/all")
+        .then((response) => {
+          useUserStore().storeUsers(response.data.data);
+          taskStore.storeUsersToAddToTheTask(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
     },
 
     // getTaskColor(task: Task, index) {
