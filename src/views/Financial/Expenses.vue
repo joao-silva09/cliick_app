@@ -12,7 +12,10 @@
 
     <AddExpenseModal ref="addExpenseModal" />
 
-    <h4>Total gasto: {{ $pinia.state.value.expense.totalExpense }}</h4>
+    <h4>
+      Total gasto:
+      {{ BRLFormat($pinia.state.value.expense.totalExpense) }}
+    </h4>
 
     <ul class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
       <li
@@ -25,7 +28,7 @@
           <h3 class="text-lg mb-3">
             {{ expense.title }}
             {{ expense.description }}
-            {{ expense.value }}
+            {{ BRLFormat(expense.value) }}
             {{ expense.paid_at }}
           </h3>
         </div>
@@ -53,18 +56,18 @@ export default {
   },
 
   methods: {
-    getExpenses() {
-      expenseStore.getExpenses();
-    },
-
     openModal() {
       this.$refs.addExpenseModal.openModal();
     },
+
+    BRLFormat(amount) {
+      return amount.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      });
+    },
   },
 
-  created() {
-    this.getExpenses();
-  },
 };
 </script>
 
