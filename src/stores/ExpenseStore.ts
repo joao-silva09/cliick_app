@@ -7,20 +7,26 @@ import { useCompanyStore } from "./CompanyStore";
 export const useExpenseStore = defineStore("expense", {
   state: () => ({
     expenses: [] as Expense[],
-    totalExpense: 0
+    totalExpense: 0,
   }),
   actions: {
-    storeExpenses(expenses, totalExpense) {
+    storeExpenses(expenses, company, totalExpense) {
       this.expenses = expenses;
+      if (company !== null) {
+        useCompanyStore().storeCompany(company);
+      }
       this.totalExpense = totalExpense;
-      useCompanyStore().storeCompany(expenses[0].company);
     },
     getExpenses() {
       useApplicationStore().setIsLoading(true);
       api
         .get("expenses")
         .then((response) => {
-          this.storeExpenses(response.data.expenses, response.data.totalExpense);
+          this.storeExpenses(
+            response.data.expenses,
+            response.data.company,
+            response.data.totalExpense
+          );
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));
