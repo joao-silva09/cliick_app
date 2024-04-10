@@ -23,3 +23,10 @@ export enum UserTypes {
   Employee = "Funcionário",
   Freelancer = "Freelancer",
 }
+
+export enum ContractServiceRecurrence {
+  Annual = "Anual",
+  Monthly = "Mensal",
+  Weekly = "Semanal",
+  None = "Nenhuma",
+}
