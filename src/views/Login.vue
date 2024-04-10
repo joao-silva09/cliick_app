@@ -128,6 +128,7 @@ export default {
           this.spinner.login = false;
           const errorCode = e?.response?.data?.error || "ServerError";
           this.response.color = "red";
+          alert(e);
           // this.response.message = message[errorCode];
         });
     },
