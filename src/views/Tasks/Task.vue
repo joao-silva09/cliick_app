@@ -66,7 +66,7 @@
             />
             <img
               v-else
-              src="../assets/img/default-profile-photo.png"
+              src="../../assets/img/default-profile-photo.png"
               alt="Profile Photo"
               class="w-32 h-32 rounded-full mb-2 cursor-pointer"
             />
