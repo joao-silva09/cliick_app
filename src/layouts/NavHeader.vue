@@ -15,7 +15,8 @@
       <HeaderLinks :routeName="'tasksForCustomer'" routeLabel="Por Cliente" />
     </ul>
     <ul v-if="$route.matched[1].path === '/financial'" class="flex gap-2">
-      <HeaderLinks :routeName="'financialOverview'" routeLabel="Geral" />
+      <HeaderLinks :routeName="'financialDashboard'" routeLabel="Dashboard" />
+      <HeaderLinks :routeName="'contracts'" routeLabel="Contratos" />
       <HeaderLinks :routeName="'expenses'" routeLabel="Despesas" />
       <HeaderLinks :routeName="'debts'" routeLabel="Dívidas" />
     </ul>
