@@ -24,7 +24,7 @@
             v-model="task.title"
             type="text"
             id="title"
-             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="description">Descrição</label>
@@ -32,7 +32,7 @@
             v-model="task.description"
             type="text"
             id="description"
-             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
           <label for="deadline">Prazo</label>
@@ -40,14 +40,36 @@
             v-model="task.deadline"
             type="date"
             id="deadline"
-             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+
+          <label for="customer">Cliente</label>
+          <v-select
+            v-model="task.customer"
+            :options="$pinia.state.value.customer.customers"
+            label="name"
+            id="customer"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+
+          <label for="teams">Times envolvidos</label>
+          <v-select
+            v-model="task.teams"
+            :options="$pinia.state.value.team.teams"
+            label="name"
+            multiple
+            id="teams"
+            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            @update:modelValue="handleAddTeam"
+            @remove="handleRemoveTeam"
+            appendToBody
           />
 
           <label for="usersIds">Usuários</label>
           <v-select
             v-model="task.users"
-            :options="$pinia.state.value.demand.usersToAdd"
-            label="name"
+            :options="$pinia.state.value.task.usersToAddToTheTask"
+            label="full_name"
             multiple
             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
@@ -78,13 +100,15 @@ import api from "../../services/api";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import { useUserStore } from "../../stores/UserStore";
-import { useDemandStore } from "../../stores/DemandStore";
+// import { useDemandStore } from "../../stores/DemandStore";
 // import { Task } from "../../types/Task";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 import { TaskStatus } from "../../types/Enums";
+import { useTaskStore } from "../../stores/TaskStore";
 
 const userStore = useUserStore();
-const demandStore = useDemandStore();
+const taskStore = useTaskStore();
+// const demandStore = useDemandStore();
 export default {
   name: "AddTaskModal",
   components: {
@@ -101,6 +125,8 @@ export default {
         title: "",
         description: "",
         deadline: null,
+        customer: {},
+        teams: [],
         users: [],
       },
     };
@@ -121,32 +147,57 @@ export default {
         description: this.task.description,
         status: TaskStatus.Pending,
         deadline: this.task.deadline,
-        demand_id: this.$props.demandId,
+        customer_id: this.task.customer.id,
+        teams_ids: this.task.teams.map((team) => team.id),
         users_ids: [
-          userStore.user.id,
+          // userStore.user.id,
           ...this.task.users.map((user) => user.id),
         ],
       };
-
-      console.log(demandStore.demandIndex);
 
       api
         .post("tasks", payload)
         .then((response) => {
           // const taskList: any[] =
           //   demandStore.demands![
-          const taskList =
-            demandStore.demands[
-              Number(demandStore.demandIndex)
-            ].tasks ?? [];
+          const taskList = taskStore.tasks ?? [];
           taskList.push(response.data.data);
-          demandStore.storeTasks(taskList);
+          taskStore.storeTasks(taskList);
         })
         .catch((e) => console.log(e))
         .finally(() => {
           this.closeModal();
           useApplicationStore().setIsLoading(false);
         });
+    },
+    handleAddTeam() {
+      taskStore.storeTeams(
+        taskStore.teams.filter((team) => !this.task.teams.includes(team))
+      );
+
+      console.log(this.task.teams);
+    },
+
+    handleRemoveTeam(removedTeam) {
+      // Adicionar o time removido de volta à lista de opções gerenciada pelo Pinia
+      this.$pinia.state.value.team.teams.push(removedTeam);
+
+      console.log(this.task.teams);
+    },
+  },
+  watch: {
+    "task.teams": function (newTeams, oldTeams) {
+      // Identifica o time removido
+      const removedTeam = oldTeams.find((team) => !newTeams.includes(team));
+
+      if (removedTeam) {
+        // Adiciona o time removido de volta à lista de opções gerenciada pelo Pinia
+        this.$pinia.state.value.team.teams.push(removedTeam);
+        // Ordena a lista alfabeticamente
+        this.$pinia.state.value.team.teams.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      }
     },
   },
 };
