@@ -10,9 +10,6 @@ export const useCompanyStore = defineStore("company", {
       this.company = company;
     },
 
-    writeOffBalance(value: Number) {
-      this.company?.balance = this.company.balance - value;
-    }
     // getCustomers() {
     //   useApplicationStore().setIsLoading(true);
     //   api
