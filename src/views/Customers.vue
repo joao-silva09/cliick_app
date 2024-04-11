@@ -9,7 +9,8 @@
         Adicionar Cliente
       </button>
     </div>
-    <TableCustomers />
+    <TableCustomers v-if="$pinia.state.value.customer.customers.length !== 0" />
+    <h3 v-else class="text-center">Nenhum cliente cadastrado</h3>
 
     <Modal ref="modal" />
   </div>
