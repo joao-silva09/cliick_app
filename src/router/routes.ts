@@ -145,10 +145,18 @@ export const routes = [
         children: [
           {
             path: "",
-            name: "financialOverview",
+            name: "financialDashboard",
             component: () =>
               import(
-                /* webpackChunkName: "financialOverview" */ "../views/Financial/Financial.vue"
+                /* webpackChunkName: "financialDashboard" */ "../views/Financial/Financial.vue"
+              ),
+          },
+          {
+            path: "contracts",
+            name: "contracts",
+            component: () =>
+              import(
+                /* webpackChunkName: "contracts" */ "../views/Financial/Contracts.vue"
               ),
           },
           {
@@ -165,6 +173,20 @@ export const routes = [
             component: () =>
               import(
                 /* webpackChunkName: "debts" */ "../views/Financial/Debts.vue"
+              ),
+          },
+        ],
+      },
+      {
+        path: "services",
+        name: "servicesRoute",
+        children: [
+          {
+            path: "",
+            name: "services",
+            component: () =>
+              import(
+                /* webpackChunkName: "services" */ "../views/Services/Services.vue"
               ),
           },
         ],
