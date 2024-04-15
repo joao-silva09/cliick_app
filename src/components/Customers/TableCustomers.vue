@@ -25,7 +25,7 @@
           <td>{{ customer.name }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.entry_date }}</td>
-          <td>4598944658</td>
+          <td>{{ customer.phone }}</td>
         </tr>
       </tbody>
     </table>
