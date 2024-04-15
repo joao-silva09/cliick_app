@@ -1,9 +1,9 @@
 <template>
   <div class="flex justify-center text-left">
-    <table class="w-[100%]">
+    <table class="w-[100%] text-center">
       <thead>
         <tr>
-          <th class="pb-2">Nome</th>
+          <th class="pb-2" colspan="2">Cliente</th>
           <th>Email</th>
           <th>Data de Entrada</th>
           <th>Contato</th>
@@ -14,15 +14,15 @@
           v-for="customer in $pinia.state.value.customer.customers"
           class="border-y border-gray-300"
         >
-          <td>
+          <td class="p-1">
             <img
               :src="`https://erp-api.agenciacliick.com.br/default.php/storage/${customer.customer_logo}`"
               alt="Profile Photo"
-              class="w-32 h-32 rounded-full mb-2 cursor-pointer"
+              class="w-8 h-8 rounded-full mb-2 cursor-pointer"
               @click="openUpdateProfilePhotoModal()"
             />
           </td>
-          <td class="p-1">{{ customer.name }}</td>
+          <td>{{ customer.name }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.entry_date }}</td>
           <td>4598944658</td>
