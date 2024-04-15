@@ -35,20 +35,34 @@
             class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
 
-          <label for="phone">Telefone</label>
-          <input
-            v-model="customer.phone"
-            type="number"
-            id="phone"
-            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
+          <div class="flex justify-between">
+            <label for="phone" class="w-[48%]"
+              >Telefone
+              <input
+                v-model="customer.phone"
+                type="number"
+                id="phone"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </label>
 
-          <label for="entry_date">Data de Entrada</label>
+            <label for="entry_date" class="w-[48%]"
+              >Data de Entrada
+              <input
+                v-model="customer.entryDate"
+                type="date"
+                id="entry_date"
+                class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </label>
+          </div>
+
+          <label for="customer_logo">Logo do cliente</label>
           <input
-            v-model="customer.entryDate"
-            type="date"
-            id="entry_date"
-            class="px-2 block w-full rounded-md border-0 py-1.5 mb-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            type="file"
+            id="customer_logo"
+            @change="logoChanged"
+            class="w-full"
           />
         </div>
 
@@ -87,6 +101,7 @@ export default {
         email: "",
         phone: "",
         entryDate: "",
+        customer_logo: null,
       },
     };
   },
@@ -99,26 +114,66 @@ export default {
       this.isOpen = false;
     },
 
-    createCustomer() {
+    logoChanged(event) {
+      this.customer.customer_logo = event.target.files[0];
+    },
+
+    // createCustomer() {
+    //   useApplicationStore().setIsLoading(true);
+    //   const payload = {
+    //     name: this.customer.name,
+    //     email: this.customer.email,
+    //     phone: this.customer.phone.toString(),
+    //     entry_date: this.customer.entryDate,
+    //     company_id: 1,
+    //   };
+
+    //   api
+    //     .post("customers", payload)
+    //     .then((response) => {
+    //       const currentCustomers = customerStore.customers;
+    //       currentCustomers.unshift(response.data.data);
+    //       customerStore.storeCustomers(currentCustomers);
+    //     })
+    //     .catch((e) => alert(e))
+    //     .finally(() => useApplicationStore().setIsLoading(false));
+
+    //   this.closeModal();
+    // },
+
+    async createCustomer() {
       useApplicationStore().setIsLoading(true);
-      const payload = {
-        name: this.customer.name,
-        email: this.customer.email,
-        phone: this.customer.phone.toString(),
-        entry_date: this.customer.entryDate,
-        company_id: 1,
-      };
+      const formData = new FormData();
 
-      api
-        .post("customers", payload)
-        .then((response) => {
-          const currentCustomers = customerStore.customers;
-          currentCustomers.unshift(response.data.data);
-          customerStore.storeCustomers(currentCustomers);
-        })
-        .catch((e) => alert(e))
-        .finally(() => useApplicationStore().setIsLoading(false));
+      // Adiciona os dados existentes ao FormData
+      formData.append("name", this.customer.name);
+      formData.append("email", this.customer.email);
+      formData.append("phone", this.customer.phone.toString());
+      formData.append("entry_date", this.customer.entryDate);
+      formData.append("company_id", 1);
 
+      // Verifica se um arquivo de logo foi selecionado e adiciona ao FormData
+      if (this.customer.customer_logo) {
+        formData.append("customer_logo", this.customer.customer_logo);
+      }
+
+      try {
+        // Envia os dados do cliente com o arquivo para o servidor
+        const response = await api.post("customers", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        const currentCustomers = customerStore.customers;
+        currentCustomers.unshift(response.data.data);
+        customerStore.storeCustomers(currentCustomers);
+        alert("Cliente cadastrado com sucesso!");
+      } catch (error) {
+        console.error("Erro ao cadastrar cliente:", error);
+        alert("Erro ao cadastrar cliente.");
+      } finally {
+        useApplicationStore().setIsLoading(false);
+      }
       this.closeModal();
     },
   },
