@@ -5,5 +5,6 @@ export type Customer = {
   name?: String;
   email?: String;
   entry_date?: Date;
+  customer_logo?: String;
   tasks?: Array<Task>;
 };
