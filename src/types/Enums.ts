@@ -24,6 +24,12 @@ export enum UserTypes {
   Freelancer = "Freelancer",
 }
 
+export enum ContractStatus {
+  Active = "Ativo",
+  Canceled = "Cancelado",
+  Completed = "Concluído",
+}
+
 export enum ContractServiceRecurrence {
   Annual = "Anual",
   Monthly = "Mensal",
