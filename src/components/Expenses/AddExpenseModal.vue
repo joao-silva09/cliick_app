@@ -114,7 +114,6 @@ export default {
     },
 
     createExpense() {
-      useApplicationStore().setIsLoading(true);
       const payload = {
         title: this.expense.title,
         description: this.expense.description,
@@ -122,7 +121,8 @@ export default {
         paid_at: this.expense.paid_at,
         company_id: useCompanyStore().company.id,
       };
-
+      
+      useApplicationStore().setIsLoading(true);
       api
         .post("expenses", payload)
         .then((response) => {
@@ -130,6 +130,7 @@ export default {
           currentExpenses?.push(response.data.expense);
           expenseStore.storeExpenses(
             currentExpenses,
+            response.data.company,
             response.data.totalExpense
           );
         })
