@@ -15,9 +15,12 @@
       <HeaderLinks :routeName="'tasksForTeam'" routeLabel="Por Time" />
       <HeaderLinks :routeName="'tasksForCustomer'" routeLabel="Por Cliente" />
     </ul>
+    <ul v-if="$route.matched[1].path === '/services'" class="flex gap-2">
+      <HeaderLinks :routeName="'services'" routeLabel="Serviços" />
+      <HeaderLinks :routeName="'servicesContracts'" routeLabel="Contratos" />
+    </ul>
     <ul v-if="$route.matched[1].path === '/financial'" class="flex gap-2">
       <HeaderLinks :routeName="'financialDashboard'" routeLabel="Dashboard" />
-      <HeaderLinks :routeName="'contracts'" routeLabel="Contratos" />
       <HeaderLinks :routeName="'expenses'" routeLabel="Despesas" />
       <HeaderLinks :routeName="'debts'" routeLabel="Dívidas" />
     </ul>
