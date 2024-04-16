@@ -181,6 +181,14 @@ export const routes = [
                 /* webpackChunkName: "services" */ "../views/Services/Services.vue"
               ),
           },
+          {
+            path: "contracts",
+            name: "servicesContracts",
+            component: () =>
+              import(
+                /* webpackChunkName: "contracts" */ "../views/Services/Contracts.vue"
+              ),
+          },
         ],
       },
     ],
