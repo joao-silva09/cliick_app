@@ -4,13 +4,18 @@ import { Task } from "../types/Task";
 import { useApplicationStore } from "./ApplicationStore";
 import { Customer } from "../types/Customer";
 import { Team } from "../types/team";
+import { User } from "../types/User";
 
 export const useTaskStore = defineStore("task", {
   state: () => ({
     tasks: [] as Task[],
     task: {} as Task,
+    pendingTasks: [] as Task[],
+    overdueTasks: [] as Task[],
     customerWithTasks: {} as Customer,
-    teamWithTasks: {} as Team
+    teamWithTasks: {} as Team,
+    usersToAddToTheTask: [] as User[],
+    teamsToAddToTheTask: [] as Team[],
   }),
   actions: {
     storeTasks(tasks) {
@@ -21,6 +26,14 @@ export const useTaskStore = defineStore("task", {
       this.task = task;
     },
 
+    storePendingTasks(tasks) {
+      this.pendingTasks = tasks;
+    },
+
+    storeOverdueTasks(tasks) {
+      this.overdueTasks = tasks;
+    },
+
     storeTaskStatus(status) {
       this.task.status = status;
     },
@@ -29,15 +42,21 @@ export const useTaskStore = defineStore("task", {
       this.task.messages = messages;
     },
 
+    storeUsersToAddToTheTask(users) {
+      this.usersToAddToTheTask = users;
+    },
+
+    storeTeamsToAddToTheTask(teams) {
+      this.teamsToAddToTheTask = teams;
+    },
+
     getMyTasks() {
-      useApplicationStore().setIsLoading(true);
       api
         .get(`tasks`)
         .then((response) => {
           this.storeTasks(response.data.data);
         })
-        .catch((e) => alert(e))
-        .finally(() => useApplicationStore().setIsLoading(false));
+        .catch((e) => alert(e));
     },
 
     getCompletedTasks() {
@@ -79,7 +98,7 @@ export const useTaskStore = defineStore("task", {
       this.tasks = tasks;
       this.teamWithTasks = team;
     },
-    
+
     clearTeamsAndCustomer() {
       this.customerWithTasks = {} as Customer;
       this.teamWithTasks = {} as Team;
