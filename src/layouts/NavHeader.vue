@@ -1,7 +1,8 @@
 <template>
   <nav class="w-full p-2">
     <ul v-if="$route.matched[1].path === '/customers'" class="flex gap-2">
-      <HeaderLinks :routeName="'customers'" routeLabel="Todos" />
+      <HeaderLinks :routeName="'customersActives'" routeLabel="Ativos" />
+      <HeaderLinks :routeName="'customersInactives'" routeLabel="Inativos" />
     </ul>
     <ul v-if="$route.matched[1].path === '/teams'" class="flex gap-2">
       <HeaderLinks :routeName="'allTeams'" routeLabel="Times" />
