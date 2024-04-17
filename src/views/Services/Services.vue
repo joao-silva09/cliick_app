@@ -16,10 +16,9 @@
       <table class="w-[100%]">
         <thead>
           <tr>
-            <th class="pb-2">Nome</th>
+            <th class="pb-2">Nome do Serviço</th>
             <th>Descrição</th>
             <th>Valor Base</th>
-            <th>Recorrência</th>
             <th>Ativo</th>
           </tr>
         </thead>
@@ -38,8 +37,10 @@
                 })
               }}
             </td>
-            <td>{{ service.recurrence }}</td>
-            <td>{{ service.active }}</td>
+            <td v-if="service.active">
+              <CheckIcon class="w-6 text-green-600" />
+            </td>
+            <td v-else><XMarkIcon class="w-6 text-red-600" /></td>
           </tr>
         </tbody>
       </table>
@@ -54,6 +55,7 @@
 import api from "../../services/api";
 import { useServiceStore } from "../../stores/ServiceStore";
 import { useApplicationStore } from "../../stores/ApplicationStore";
+import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import AddServiceModal from "../../components/Services/AddServiceModal.vue";
 
 const serviceStore = useServiceStore();
@@ -64,6 +66,8 @@ export default {
   },
   components: {
     AddServiceModal,
+    CheckIcon,
+    XMarkIcon,
   },
   created() {
     this.getServices();
