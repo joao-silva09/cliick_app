@@ -1,4 +1,5 @@
 import { MessageTypeEnum } from "./Enums";
+import { User } from "./User";
 
 export type Message = {
   id?: string;
@@ -6,4 +7,5 @@ export type Message = {
   username?: string;
   message_type?: MessageTypeEnum;
   created_at?: Date;
+  sent_by?: User;
 };
