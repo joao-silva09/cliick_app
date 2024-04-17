@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <ul class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
+    <ul v-if="$pinia.state.value.team.teams.length !== 0" class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
       <li
         v-for="(team, index) in $pinia.state.value.team.teams"
         :key="index"
@@ -25,6 +25,7 @@
         <p v-for="user in team.users">{{ user.full_name }}</p>
       </li>
     </ul>
+    <h3 v-else class="text-center">Nenhum time cadastrado</h3>
 
     <Modal ref="modal" />
   </div>
