@@ -4,17 +4,19 @@
 
     <div class="flex">
       <div class="rounded shadow-md w-[30%] p-3">
-        <h4 class="mb-4">Mensagens enviadas</h4>
+        <h4 class="mb-4">Últimas mensagens enviadas</h4>
         <ul v-for="(message, index) in $pinia.state.value.message.messages">
           <li
             :key="index"
-            class="border-b p-2 text-ellipsis overflow-hidden cursor-pointer hover:bg-gray-200"
+            class="border-b p-3 text-ellipsis overflow-hidden cursor-pointer hover:bg-gray-200"
             @click="getTask(message.task.id)"
           >
-            <p class="text-[12px]">
-              {{ new Date(message.created_at).toLocaleDateString() }}
-            </p>
-            <p class="text-sm">{{ message.task.title }}</p>
+            <div class="flex justify-between gap-8">
+              <p class="text-[11px]">
+                {{ new Date(message.created_at).toLocaleDateString() }}
+              </p>
+              <p class="text-sm truncate">{{ message.task.title }}</p>
+            </div>
             <div>
               <p v-html="message.message" class="h-4"></p>
             </div>
