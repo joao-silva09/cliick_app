@@ -1,4 +1,5 @@
 import { Customer } from "./Customer";
+import { Service } from "./Service";
 
 export type Contract = {
   id?: Number;
@@ -6,4 +7,5 @@ export type Contract = {
   end_date?: Date;
   status?: number;
   customer?: Customer;
+  services?: Service[];
 };
