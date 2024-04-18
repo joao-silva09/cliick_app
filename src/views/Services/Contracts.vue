@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <AddExpenseModal ref="addExpenseModal" />
+    <AddContractModal ref="addContractModal" />
 
     <div
       v-if="$pinia.state.value.contract.contracts.length !== 0"
@@ -28,7 +28,8 @@
         <div class="px-6 py-4 w-full">
           <div class="font-bold text-xl mb-2">{{ contract.customer.name }}</div>
           <p class="text-gray-700 text-sm">
-            Período: {{ new Date(contract.start_date).toLocaleDateString() }} - {{ new Date(contract.end_date).toLocaleDateString() }}
+            Período: {{ new Date(contract.start_date).toLocaleDateString() }} -
+            {{ new Date(contract.end_date).toLocaleDateString() }}
           </p>
         </div>
         <div class="px-6 pt-4 pb-2 flex items-center justify-between w-full">
@@ -39,6 +40,7 @@
           >
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            @click="getContract(contract.id)"
           >
             Saiba mais
           </button>
@@ -52,16 +54,16 @@
 <script>
 import { useContractStore } from "../../stores/ContractStore";
 import { ContractStatus } from "../../types/Enums";
-import AddExpenseModal from "../../components/Expenses/AddExpenseModal.vue";
+import AddContractModal from "../../components/Services/Contracts/AddContractModal.vue";
 import api from "../../services/api.ts";
 import { useApplicationStore } from "../../stores/ApplicationStore";
 
 const contractStore = useContractStore();
 export default {
-  name: "Expenses",
+  name: "Contracts",
 
   components: {
-    AddExpenseModal,
+    AddContractModal,
   },
 
   data() {
@@ -77,7 +79,7 @@ export default {
 
   methods: {
     openModal() {
-      this.$refs.addExpenseModal.openModal();
+      this.$refs.addContractModal.openModal();
     },
 
     getContracts() {
@@ -89,6 +91,25 @@ export default {
         })
         .catch((e) => alert(e))
         .finally(() => useApplicationStore().setIsLoading(false));
+    },
+
+    getContract(id) {
+      useApplicationStore().setIsLoading(true);
+      api
+        .get(`contracts/${id}`)
+        .then((response) => {
+          contractStore.storeContracts(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => {
+          this.$router.push({
+              name: "servicesContract",
+              params: {
+                id: id,
+              },
+            });
+          useApplicationStore().setIsLoading(false);
+        });
     },
 
     getContractStatusColor(status) {
