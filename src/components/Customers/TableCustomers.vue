@@ -7,6 +7,7 @@
           <th>Email</th>
           <th>Data de Entrada</th>
           <th>Contato</th>
+          <th>Ativo</th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,7 @@
           <td>{{ customer.email }}</td>
           <td>{{ customer.entry_date }}</td>
           <td>{{ customer.phone }}</td>
+          <td>{{ customer.active }}</td>
         </tr>
       </tbody>
     </table>
