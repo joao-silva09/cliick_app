@@ -12,7 +12,10 @@
 
     <AddExpenseModal ref="addExpenseModal" />
 
-    <div v-if="$pinia.state.value.contract.contracts.length !== 0" class="flex gap-3">
+    <div
+      v-if="$pinia.state.value.contract.contracts.length !== 0"
+      class="grid grid-cols-4 gap-4"
+    >
       <div
         v-for="(contract, index) in $pinia.state.value.contract.contracts"
         class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-2 flex flex-col items-center"
@@ -24,13 +27,14 @@
         />
         <div class="px-6 py-4 w-full">
           <div class="font-bold text-xl mb-2">{{ contract.customer.name }}</div>
-          <p class="text-gray-700 text-base">
-            {{ contract.status }}
+          <p class="text-gray-700 text-sm">
+            Período: {{ new Date(contract.start_date).toLocaleDateString() }} - {{ new Date(contract.end_date).toLocaleDateString() }}
           </p>
         </div>
-        <div class="px-6 pt-4 pb-2">
+        <div class="px-6 pt-4 pb-2 flex items-center justify-between w-full">
           <span
-            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+            :class="getContractStatusColor(contract.status, index)"
             >{{ contract.status }}</span
           >
           <button
@@ -47,8 +51,10 @@
 
 <script>
 import { useContractStore } from "../../stores/ContractStore";
+import { ContractStatus } from "../../types/Enums";
 import AddExpenseModal from "../../components/Expenses/AddExpenseModal.vue";
 import api from "../../services/api.ts";
+import { useApplicationStore } from "../../stores/ApplicationStore";
 
 const contractStore = useContractStore();
 export default {
@@ -75,9 +81,24 @@ export default {
     },
 
     getContracts() {
-      api.get("contracts").then((response) => {
-        contractStore.storeContracts(response.data.data);
-      });
+      useApplicationStore().setIsLoading(true);
+      api
+        .get("contracts")
+        .then((response) => {
+          contractStore.storeContracts(response.data.data);
+        })
+        .catch((e) => alert(e))
+        .finally(() => useApplicationStore().setIsLoading(false));
+    },
+
+    getContractStatusColor(status) {
+      if (status === ContractStatus.Active) {
+        return "bg-green-500 text-white";
+      } else if (status === ContractStatus.Completed) {
+        return "bg-yellow-500 text-white";
+      } else if (status === ContractStatus.Canceled) {
+        return "bg-red-500 text-white";
+      }
     },
   },
 };
