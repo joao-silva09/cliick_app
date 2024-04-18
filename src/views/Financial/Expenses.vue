@@ -12,28 +12,31 @@
 
     <AddExpenseModal ref="addExpenseModal" />
 
-    <h4>
-      Total gasto:
-      {{ BRLFormat($pinia.state.value.expense.totalExpense) }}
-    </h4>
+    <div v-if="$pinia.state.value.expense.expenses.length !== 0">
+      <h4>
+        Total gasto:
+        {{ BRLFormat($pinia.state.value.expense.totalExpense) }}
+      </h4>
 
-    <ul class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
-      <li
-        v-if="$pinia.state.value.expense.expenses"
-        v-for="(expense, index) in $pinia.state.value.expense.expenses"
-        :key="index"
-        class="bg-red-500 rounded my-2 p-4 text-white"
-      >
-        <div class="flex justify-between">
-          <h3 class="text-lg mb-3">
-            {{ expense.title }}
-            {{ expense.description }}
-            {{ BRLFormat(expense.value) }}
-            {{ expense.paid_at }}
-          </h3>
-        </div>
-      </li>
-    </ul>
+      <ul class="grid grid-cols-5 gap-4 max-h-[70vh] overflow-auto">
+        <li
+          v-if="$pinia.state.value.expense.expenses"
+          v-for="(expense, index) in $pinia.state.value.expense.expenses"
+          :key="index"
+          class="bg-red-500 rounded my-2 p-4 text-white"
+        >
+          <div class="flex justify-between">
+            <h3 class="text-lg mb-3">
+              {{ expense.title }}
+              {{ expense.description }}
+              {{ BRLFormat(expense.value) }}
+              {{ expense.paid_at }}
+            </h3>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <h3 v-else class="text-center">Nenhuma despesa cadastrada</h3>
   </div>
 </template>
 
@@ -67,7 +70,6 @@ export default {
       });
     },
   },
-
 };
 </script>
 
