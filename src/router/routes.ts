@@ -36,8 +36,24 @@ export const routes = [
       {
         path: "customers",
         name: "customers",
-        component: () =>
-          import(/* webpackChunkName: "customers" */ "../views/Customers.vue"),
+        children: [
+          {
+            path: "actives",
+            name: "customersActives",
+            component: () =>
+              import(
+                /* webpackChunkName: "actives" */ "../views/Customers/Customers.vue"
+              ),
+          },
+          {
+            path: "inactives",
+            name: "customersInactives",
+            component: () =>
+              import(
+                /* webpackChunkName: "inactives" */ "../views/Customers/Inactives.vue"
+              ),
+          },
+        ],
       },
       {
         path: "teams",
@@ -141,14 +157,6 @@ export const routes = [
             component: () =>
               import(
                 /* webpackChunkName: "financialDashboard" */ "../views/Financial/Financial.vue"
-              ),
-          },
-          {
-            path: "contracts",
-            name: "contracts",
-            component: () =>
-              import(
-                /* webpackChunkName: "contracts" */ "../views/Financial/Contracts.vue"
               ),
           },
           {
