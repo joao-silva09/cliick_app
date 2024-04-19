@@ -37,10 +37,10 @@
                 })
               }}
             </td>
-            <td v-if="service.active">
+            <td v-if="service.active" class="flex justify-center">
               <CheckIcon class="w-6 text-green-600" />
             </td>
-            <td v-else><XMarkIcon class="w-6 text-red-600" /></td>
+            <td v-else class="flex justify-center"><XMarkIcon class="w-6 text-red-600" /></td>
           </tr>
         </tbody>
       </table>
