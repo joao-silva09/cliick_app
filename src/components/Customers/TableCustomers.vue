@@ -17,7 +17,7 @@
         >
           <td class="p-1">
             <img
-              :src="`https://erp-api.agenciacliick.com.br/default.php/storage/${customer.customer_logo}`"
+              :src="`${baseUrl}/storage/${customer.customer_logo}`"
               alt="Profile Photo"
               class="w-8 h-8 rounded-full mb-2 cursor-pointer"
               @click="openUpdateProfilePhotoModal()"
@@ -38,8 +38,11 @@
 export default {
   name: "TableCustomers",
   data() {
-    return {};
+    return {
+      baseUrl: import.meta.env.VITE_API_BASE_URL,
+    };
   },
+  created() {},
   methods: {},
 };
 </script>
