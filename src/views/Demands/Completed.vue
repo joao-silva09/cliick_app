@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-3">
       <h2 class="text-xl">Tarefas Concluídas</h2>
     </div>
-    <div class="flex gap-3 flex-col">
+    <div v-if="$pinia.state.value.task.tasks.length !== 0" class="flex gap-3 flex-col">
       <div
         v-for="(task, index) in $pinia.state.value.task.tasks"
         :key="index"
@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+    <h3 v-else class="text-center pt-4">Nenhuma tarefa concluída</h3>
   </div>
 </template>
 
