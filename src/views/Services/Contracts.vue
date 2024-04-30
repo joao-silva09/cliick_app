@@ -98,7 +98,7 @@ export default {
       api
         .get(`contracts/${id}`)
         .then((response) => {
-          contractStore.storeContracts(response.data.data);
+          contractStore.storeContract(response.data.data);
         })
         .catch((e) => alert(e))
         .finally(() => {
