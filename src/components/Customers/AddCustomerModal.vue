@@ -101,6 +101,7 @@ export default {
         email: "",
         phone: "",
         entryDate: "",
+        active: 1,
         customer_logo: null,
       },
     };
@@ -150,6 +151,7 @@ export default {
       formData.append("email", this.customer.email);
       formData.append("phone", this.customer.phone.toString());
       formData.append("entry_date", this.customer.entryDate);
+      formData.append("active", this.customer.active);
       formData.append("company_id", 1);
 
       // Verifica se um arquivo de logo foi selecionado e adiciona ao FormData
